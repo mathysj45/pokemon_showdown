@@ -1,6 +1,8 @@
 module com.example.pokemon_showdown {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
+    requires java.sql;
 
 
     opens com.example.pokemon_showdown to javafx.fxml;
