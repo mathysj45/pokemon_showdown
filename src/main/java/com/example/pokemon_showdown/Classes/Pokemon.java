@@ -6,6 +6,7 @@ public class Pokemon {
     private int id;
     private String name;
     private int hp;
+    private int currentHp;
     private int attack;
     private int defense;
     private int spe_attack;
@@ -16,12 +17,13 @@ public class Pokemon {
     private List<Attack> moves;
 
     public Pokemon(int id, String name, int hp,
-                   int defense, int attack, int spe_attack,
+                   int attack, int defense, int spe_attack,
                    int spe_defense, int speed,
                    int type, Integer type2, List<Attack> moves) {
         this.id = id;
         this.name = name;
         this.hp = hp;
+        this.currentHp = hp;
         this.defense = defense;
         this.attack = attack;
         this.spe_attack = spe_attack;
@@ -33,40 +35,53 @@ public class Pokemon {
     }
 
     public int getId() { return id; }
+
     public void setId(int id) { this.id = id; }
 
     public String getName() { return name; }
+
     public void setName(String name) { this.name = name; }
 
     public int getHp() { return hp; }
+
     public void setHp(int hp) { this.hp = hp; }
 
+    public int getCurrentHp() { return currentHp; }
+
+    public void setCurrentHp(int currentHp) {
+        // Empêche les PV de descendre sous 0 ou de dépasser le Max
+        this.currentHp = Math.max(0, Math.min(hp, currentHp));
+    }
+
     public int getAttack() { return attack; }
+
     public void setAttack(int attack) { this.attack = attack; }
 
     public int getDefense() { return defense; }
+
     public void setDefense(int defense) { this.defense = defense; }
 
     public int getSpe_attack() { return spe_attack; }
+
     public void setSpe_attack(int spe_attack) { this.spe_attack = spe_attack; }
 
     public int getSpe_defense() { return spe_defense; }
+
     public void setSpe_defense(int spe_defense) { this.spe_defense = spe_defense; }
 
     public int getSpeed() { return speed; }
+
     public void setSpeed(int speed) { this.speed = speed; }
 
     public int getType() { return type; }
+
     public void setType(int type) { this.type = type; }
 
     public Integer getType2() { return type2; }
+
     public void setType2(Integer type2) { this.type2 = type2; }
 
     public List<Attack> getMoves() { return moves; }
-    public void setMoves(List<Attack> moves) { this.moves = moves; }
 
-    @Override
-    public String toString() {
-        return this.name;
-    }
+    public void setMoves(List<Attack> moves) { this.moves = moves; }
 }
