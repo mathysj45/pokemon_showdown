@@ -1,14 +1,21 @@
 package com.example.pokemon_showdown.Controller.view;
 
 import com.example.pokemon_showdown.Classes.Pokemon;
+import com.example.pokemon_showdown.Classes.Team;
 import com.example.pokemon_showdown.Database.DatabaseManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 
 public class TeamBuilderController {
 
     @FXML private ComboBox<Pokemon> teamBuilder;
+    @FXML private ListView<String> teamListView;
+    @FXML private Button fightButton;
+
     @FXML private Text pokemonName;
     @FXML private Text pokemonType1Data;
     @FXML private Text pokemonType2Data;
@@ -24,6 +31,7 @@ public class TeamBuilderController {
     @FXML private Text pokemonMove4Data;
 
     private StatsView statsView;
+    private Team myTeam = new Team();
 
     @FXML
     public void initialize() {
@@ -34,13 +42,40 @@ public class TeamBuilderController {
                 pokemonMove3Data, pokemonMove4Data
         );
 
-        DatabaseManager databaseManager = new DatabaseManager();
-        teamBuilder.setItems(databaseManager.getAllPokemons());
+        DatabaseManager dbManager = new DatabaseManager();
+        teamBuilder.setItems(dbManager.getAllPokemons());
 
         teamBuilder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 this.statsView.updateInterface(newValue);
             }
         });
+
+        teamBuilder.setConverter(new StringConverter<Pokemon>() {
+            @Override
+            public String toString(Pokemon pokemon) {
+                return (pokemon == null) ? "" : pokemon.getName();
+            }
+
+            @Override
+            public Pokemon fromString(String string) {
+                return null;
+            }
+        });
+    }
+
+    private Team Team = new Team();
+
+    @FXML
+    private void addPokemonToTeam() {
+        Pokemon selectedPokemon = teamBuilder.getSelectionModel().getSelectedItem();
+        boolean isSuccess = Team.addMember(selectedPokemon);
+
+        if (isSuccess) {
+            teamListView.getItems().add(selectedPokemon.getName());
+            fightButton.setDisable(!Team.isValid());
+        } else {
+            System.out.println("Cannot add: Team full (Max 6) or empty selection.");
+        }
     }
 }
