@@ -5,6 +5,7 @@ import com.example.pokemon_showdown.Classes.Pokemon;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import com.example.pokemon_showdown.Database.DatabaseManager;
+import javafx.util.StringConverter;
 
 public class TeamBuilderController {
 
@@ -13,12 +14,14 @@ public class TeamBuilderController {
 
     @FXML
     public void initialize() {
-        DatabaseManager dbManager = new DatabaseManager();
-        teamBuilder.setItems(dbManager.getAllPokemons());
-
-        teamBuilder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                System.out.println("Selected : " + newValue.getName());
+        teamBuilder.setConverter(new StringConverter<Pokemon>() {
+            @Override
+            public String toString(Pokemon pokemon) {
+                return (pokemon == null) ? "" : pokemon.getName();
+            }
+            @Override
+            public Pokemon fromString(String string) {
+                return null;
             }
         });
     }
