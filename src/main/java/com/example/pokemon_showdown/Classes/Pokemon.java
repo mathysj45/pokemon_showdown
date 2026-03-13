@@ -40,7 +40,8 @@ public class Pokemon {
         ObservableList<Pokemon> pokemonList = FXCollections.observableArrayList();
         String query = "SELECT * FROM pokemon";
 
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
+        try (Connection connection = DriverManager.getConnection(DB_URL,
+                USER, PASS);
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 

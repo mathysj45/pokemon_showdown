@@ -16,7 +16,7 @@ public class TeamBuilderController {
 
         teamBuilder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                System.out.println("Selection : " + newValue.getName());
+                System.out.println("Selected : " + newValue.getName());
             }
         });
     }
