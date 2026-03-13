@@ -75,7 +75,7 @@ CREATE TABLE `pokemon` (
 
 INSERT INTO `pokemon` (`id`, `sprite`, `name`, `type`, `type2`, `hp`,
                        `attack`, `defense`, `spe_attack`, `spe_defense`, `speed`) VALUES
-(1, NULL, 'rathalos', 2, 10, 360, 267, 255, 317, 269, 299),
+(1, NULL, 'Rathalos', 2, 10, 360, 267, 255, 317, 269, 299),
 (2, NULL, 'Fatalis', 14, 15, 504, 339, 299, 339, 299, 279),
 (3, NULL, 'Rey Dau', 15, 5, 404, 399, 339, 339, 299, 279),
 (4, NULL, 'Hermitaur daimyo', 3, NULL, 346, 245, 275, 339, 277, 217),

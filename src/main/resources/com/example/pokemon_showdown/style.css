@@ -1,0 +1,60 @@
+.root {
+    -fx-text-color: #03071e;
+    -fx-text-secondary-color: #2b2d42;
+
+    -fx-button-colorBack: #3a0ca3;
+    -fx-button-hover: #3f37c9;
+    -fx-text-button-color: #fdf0d5;
+
+    /*-fx-padding-s: 0.5rem;*/
+    /*-fx-padding-m: 1rem;*/
+    /*-fx-padding-l: 1.5rem;*/
+    /*-fx-padding-xl: 1.5rem;*/
+
+    /*-fx-gap-s: 0.25rem;*/
+    /*-fx-gap-m: 0.75rem;*/
+    /*-fx-gap-l: 1rem;*/
+    /*-fx-gap-xl: 1.25rem;*/
+
+    /*-fx-borderRadius: 15px;*/
+}
+
+#contain {
+    -fx-background-image: url("map_world.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-alignment: center;
+    -fx-spacing: 3.5em;
+}
+
+#containStats {
+    -fx-background-image: url("old_paper.png");
+    -fx-min-height: 200px;
+    -fx-min-width: 500px;
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-alignment: center;
+    -fx-spacing: 3em;
+    -fx-padding: 3em;
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-text-fill: -fx-text-button-color;
+    -fx-background-color: -fx-button-colorBack;
+}
+
+.button:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.button:pressed {
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 0, 1), 0, 0, 0, 0);
+    -fx-background-color: -fx-text-button-color;
+    -fx-text-fill: -fx-button-colorBack;
+}
