@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : ven. 13 mars 2026 à 11:27
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Hôte : db
+-- Généré le : ven. 13 mars 2026 à 13:10
+-- Version du serveur : 5.7.44
+-- Version de PHP : 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,20 @@ CREATE TABLE `attack` (
   `type_id` int(11) NOT NULL,
   `category` varchar(255) NOT NULL,
   `secondary_effect_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `attack`
+--
+
+INSERT INTO `attack` (`id`, `name`, `power`, `type_id`, `category`, `secondary_effect_id`) VALUES
+(1, 'Boutefeu', 120, 2, 'Physical', 1),
+(2, 'Giga-Sangsue', 75, 4, 'special', 2),
+(3, 'Lance-flamme', 90, 2, 'special', 3),
+(4, 'Choc Venimeux', 65, 8, 'special', 4),
+(5, 'Tonnerre', 90, 5, 'special', 5),
+(6, 'Draco-Choc', 85, 15, 'special', 6),
+(7, 'Rapace', 120, 10, 'physical', 7);
 
 -- --------------------------------------------------------
 
@@ -51,18 +64,17 @@ CREATE TABLE `pokemon` (
   `hp` int(11) NOT NULL,
   `attack` int(11) NOT NULL,
   `defense` int(11) NOT NULL,
-  `speAttack` int(11) NOT NULL,
-  `speDefense` int(11) NOT NULL,
+  `spe_attack` int(11) NOT NULL,
+  `spe_defense` int(11) NOT NULL,
   `speed` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `pokemon`
 --
 
 INSERT INTO `pokemon` (`id`, `sprite`, `name`, `type`, `type2`, `hp`,
-                       `attack`, `defense`, `speAttack`, `speDefense`,
-                       `speed`) VALUES
+                       `attack`, `defense`, `spe_attack`, `spe_defense`, `speed`) VALUES
 (1, NULL, 'rathalos', 2, 10, 360, 267, 255, 317, 269, 299),
 (2, NULL, 'Fatalis', 14, 15, 504, 339, 299, 339, 299, 279),
 (3, NULL, 'Rey Dau', 15, 5, 404, 399, 339, 339, 299, 279),
@@ -77,13 +89,40 @@ INSERT INTO `pokemon` (`id`, `sprite`, `name`, `type`, `type2`, `hp`,
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `pokemon_attacks`
+--
+
+CREATE TABLE `pokemon_attacks` (
+  `id_attacks` int(11) NOT NULL,
+  `id_pokemon` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `pokemon_attacks`
+--
+
+INSERT INTO `pokemon_attacks` (`id_attacks`, `id_pokemon`) VALUES
+(1, 1),
+(3, 1),
+(7, 1),
+(6, 2),
+(5, 3),
+(3, 5),
+(6, 5),
+(5, 6),
+(2, 7),
+(3, 7);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `type`
 --
 
 CREATE TABLE `type` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `type`
@@ -117,7 +156,8 @@ INSERT INTO `type` (`id`, `name`) VALUES
 -- Index pour la table `attack`
 --
 ALTER TABLE `attack`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `type_id` (`type_id`);
 
 --
 -- Index pour la table `pokemon`
@@ -126,6 +166,13 @@ ALTER TABLE `pokemon`
   ADD PRIMARY KEY (`id`),
   ADD KEY `type` (`type`),
   ADD KEY `type2` (`type2`);
+
+--
+-- Index pour la table `pokemon_attacks`
+--
+ALTER TABLE `pokemon_attacks`
+  ADD KEY `id_attacks` (`id_attacks`),
+  ADD KEY `id_pokemon` (`id_pokemon`);
 
 --
 -- Index pour la table `type`
@@ -141,7 +188,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT pour la table `attack`
 --
 ALTER TABLE `attack`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `pokemon`
@@ -160,11 +207,24 @@ ALTER TABLE `type`
 --
 
 --
+-- Contraintes pour la table `attack`
+--
+ALTER TABLE `attack`
+  ADD CONSTRAINT `attack_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `type` (`id`);
+
+--
 -- Contraintes pour la table `pokemon`
 --
 ALTER TABLE `pokemon`
   ADD CONSTRAINT `pokemon_type` FOREIGN KEY (`type`) REFERENCES `type` (`id`),
   ADD CONSTRAINT `pokemon_type2` FOREIGN KEY (`type2`) REFERENCES `type` (`id`);
+
+--
+-- Contraintes pour la table `pokemon_attacks`
+--
+ALTER TABLE `pokemon_attacks`
+  ADD CONSTRAINT `pokemon_attacks_ibfk_1` FOREIGN KEY (`id_attacks`) REFERENCES `attack` (`id`),
+  ADD CONSTRAINT `pokemon_attacks_ibfk_2` FOREIGN KEY (`id_pokemon`) REFERENCES `pokemon` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

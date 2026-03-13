@@ -1,75 +1,69 @@
 package com.example.pokemon_showdown.Classes;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import java.sql.*;
+import java.util.List;
 
 public class Pokemon {
-
-    private String sprite;
+    private int id;
     private String name;
-    private String type;
-    private String type2;
     private int hp;
     private int attack;
-    private int speAttack;
     private int defense;
-    private int speDefense;
+    private int spe_attack;
+    private int spe_defense;
     private int speed;
+    private int type;
+    private Integer type2;
+    private List<Attack> moves;
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/showdown";
-    private static final String USER = "root";
-    private static final String PASS = "";
-
-    public Pokemon(String sprite, String name, String type, String type2,
-                   int hp, int attack, int speAttack, int defense,
-                   int speDefense, int speed) {
-        this.sprite = sprite;
+    public Pokemon(int id, String name, int hp,
+                   int defense, int attack, int spe_attack,
+                   int spe_defense, int speed,
+                   int type, Integer type2, List<Attack> moves) {
+        this.id = id;
         this.name = name;
+        this.hp = hp;
+        this.defense = defense;
+        this.attack = attack;
+        this.spe_attack = spe_attack;
+        this.spe_defense = spe_defense;
+        this.speed = speed;
         this.type = type;
         this.type2 = type2;
-        this.hp = hp;
-        this.attack = attack;
-        this.speAttack = speAttack;
-        this.defense = defense;
-        this.speDefense = speDefense;
-        this.speed = speed;
+        this.moves = moves;
     }
 
-    public static ObservableList<Pokemon> getAllPokemons() {
-        ObservableList<Pokemon> pokemonList = FXCollections.observableArrayList();
-        String query = "SELECT * FROM pokemon";
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-        try (Connection connection = DriverManager.getConnection(DB_URL,
-                USER, PASS);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-            while (rs.next()) {
-                Pokemon pokemonInstance = new Pokemon(
-                        rs.getString("sprite"),
-                        rs.getString("name"),
-                        rs.getString("type"),
-                        rs.getString("type2"),
-                        rs.getInt("hp"),
-                        rs.getInt("attack"),
-                        rs.getInt("speAttack"),
-                        rs.getInt("defense"),
-                        rs.getInt("speDefense"),
-                        rs.getInt("speed")
-                );
-                pokemonList.add(pokemonInstance);
-                System.out.println(pokemonInstance);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return pokemonList;
-    }
+    public int getHp() { return hp; }
+    public void setHp(int hp) { this.hp = hp; }
 
-    public String getName() {
-        return name;
-    }
+    public int getAttack() { return attack; }
+    public void setAttack(int attack) { this.attack = attack; }
+
+    public int getDefense() { return defense; }
+    public void setDefense(int defense) { this.defense = defense; }
+
+    public int getSpe_attack() { return spe_attack; }
+    public void setSpe_attack(int spe_attack) { this.spe_attack = spe_attack; }
+
+    public int getSpe_defense() { return spe_defense; }
+    public void setSpe_defense(int spe_defense) { this.spe_defense = spe_defense; }
+
+    public int getSpeed() { return speed; }
+    public void setSpeed(int speed) { this.speed = speed; }
+
+    public int getType() { return type; }
+    public void setType(int type) { this.type = type; }
+
+    public Integer getType2() { return type2; }
+    public void setType2(Integer type2) { this.type2 = type2; }
+
+    public List<Attack> getMoves() { return moves; }
+    public void setMoves(List<Attack> moves) { this.moves = moves; }
 
     @Override
     public String toString() {
