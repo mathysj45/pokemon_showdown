@@ -67,7 +67,9 @@ public class Pokemon {
 
     public int getSpe_defense() { return spe_defense; }
 
-    public void setSpe_defense(int spe_defense) { this.spe_defense = spe_defense; }
+    public void setSpe_defense(int spe_defense) {
+        this.spe_defense = spe_defense;
+    }
 
     public int getSpeed() { return speed; }
 

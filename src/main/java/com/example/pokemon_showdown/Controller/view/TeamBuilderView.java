@@ -7,16 +7,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
-public class TeamBuilderController {
+public class TeamBuilderView {
 
     @FXML private ComboBox<Pokemon> teamBuilder;
     @FXML private ListView<String> teamListView;
     @FXML private Button fightButton;
-    @FXML private StatsView statsView;
-    @FXML private Team Team = new Team();
+    @FXML private ImageView pokemonSprite;
+
+    private StatsView statsView;
+    private Team team = new Team();
 
     @FXML private Text pokemonName;
     @FXML private Text pokemonType1Data;
@@ -32,25 +35,36 @@ public class TeamBuilderController {
     @FXML private Text pokemonMove3Data;
     @FXML private Text pokemonMove4Data;
 
-
     @FXML
     public void initialize() {
-        this.statsView = new StatsView(
-                pokemonName, pokemonType1Data, pokemonType2Data, pokemonHpData, pokemonAttackData,
-                pokemonDefenseData, pokemonSpeAttackData, pokemonSpeDefenseData,
-                pokemonSpeedData, pokemonMove1Data, pokemonMove2Data,
-                pokemonMove3Data, pokemonMove4Data
-        );
+        initializeStatsView();
+        loadDBData();
+        setupComboBox();
+    }
 
+    private void initializeStatsView() {
+        this.statsView = new StatsView(
+                pokemonName, pokemonType1Data, pokemonType2Data, pokemonHpData,
+                pokemonAttackData, pokemonDefenseData, pokemonSpeAttackData,
+                pokemonSpeDefenseData, pokemonSpeedData, pokemonMove1Data,
+                pokemonMove2Data, pokemonMove3Data, pokemonMove4Data,
+                pokemonSprite
+        );
+    }
+
+    private void loadDBData() {
         DatabaseManager dbManager = new DatabaseManager();
         teamBuilder.setItems(dbManager.getAllPokemons());
+    }
 
+    private void setupComboBox() {
         teamBuilder.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                this.statsView.updateInterface(newValue);
-            }
-        });
+                (observable, oldValue,
+                 newValue) -> {
+                    if (newValue != null) {
+                        this.statsView.updateInterface(newValue);
+                    }
+                });
 
         teamBuilder.setConverter(new StringConverter<Pokemon>() {
             @Override
@@ -67,14 +81,15 @@ public class TeamBuilderController {
 
     @FXML
     private void addPokemonToTeam() {
-        Pokemon selectedPokemon = teamBuilder.getSelectionModel().getSelectedItem();
-        boolean isSuccess = Team.addMember(selectedPokemon);
+        Pokemon selectedPokemon = teamBuilder.getSelectionModel().
+                                                getSelectedItem();
+        boolean isSuccess = team.addMember(selectedPokemon);
 
         if (isSuccess) {
             teamListView.getItems().add(selectedPokemon.getName());
-            fightButton.setDisable(!Team.isValid());
+            fightButton.setDisable(!team.isValid());
         } else {
-            System.out.println("Cannot add: Team full (Max 6) or empty selection.");
+            System.out.println("Équipe remplie (max 6) ou aucune séléction.");
         }
     }
 
@@ -83,11 +98,11 @@ public class TeamBuilderController {
         int selectedIndex = teamListView.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Team.removeMember(selectedIndex);
+            team.removeMember(selectedIndex);
             teamListView.getItems().remove(selectedIndex);
-            fightButton.setDisable(!Team.isValid());
-            System.out.println("Pokémon retiré. Taille équipe : " + teamListView.getItems().size());
+            fightButton.setDisable(!team.isValid());
+            System.out.println("Pokémon retiré. Taille équipe : " +
+                    teamListView.getItems().size());
         }
     }
-
 }

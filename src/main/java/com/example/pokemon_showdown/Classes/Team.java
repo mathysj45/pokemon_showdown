@@ -25,6 +25,6 @@ public class Team {
     }
 
     public boolean isValid() {
-        return members.size() >= 3; //conditions pour lancer un combat
+        return members.size() >= 3;
     }
 }

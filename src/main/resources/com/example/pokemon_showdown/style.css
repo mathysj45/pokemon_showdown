@@ -44,25 +44,26 @@
     -fx-background-color: transparent;
 }
 
+
+
 #contain {
-    -fx-background-image: url("map_world.jpg");
+    -fx-background-image: url("rise.jpg");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-alignment: center;
     -fx-spacing: 3.5em;
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
 }
 
 #containStats {
-    -fx-background-image: url("old_paper.png");
     -fx-min-height: 200px;
-    -fx-min-width: 500px;
-    -fx-background-size: stretch;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
+    -fx-min-width: 470px;
     -fx-alignment: center;
     -fx-spacing: 3em;
     -fx-padding: 3em;
+    -fx-hgap: 200px;
     -fx-font-weight: bold;
 }
 
@@ -86,15 +87,21 @@
 
 #pokemonListTop,
 #teamListView,
-#teamBuilder{
+#teamBuilder,
+#containStats {
     -fx-background-color: -fx-background-color-primary;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.0, 0, 5);
     -fx-background-radius: 15px;
     -fx-padding: 1em;
     -fx-spacing: 1em;
-    -fx-border-width: 2px;
+    -fx-border-width: 3px;
     -fx-border-radius: 15px;
     -fx-border-color: -fx-background-color-border;
+}
+
+#pokemonSprite {
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
 }
 
 #teamBuilder {
@@ -104,4 +111,11 @@
 
 #teamListView {
     -fx-background-color: transparent;
+}
+
+#chooseItem {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-control-inner-background-alt: transparent;
+    -fx-background-insets: 0;
 }

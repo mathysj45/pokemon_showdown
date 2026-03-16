@@ -12,7 +12,8 @@ import java.util.List;
 public class DatabaseManager {
 
     public ObservableList<Pokemon> getAllPokemons() {
-        ObservableList<Pokemon> pokemonList = FXCollections.observableArrayList();
+        ObservableList<Pokemon> pokemonList =
+                FXCollections.observableArrayList();
         String query = "SELECT * FROM pokemon";
 
         // Utilisation de ConnectionMySQL.getConnection()

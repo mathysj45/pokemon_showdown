@@ -9,7 +9,8 @@ public class Attack {
     private String category;
     private int secondaryEffectId;
 
-    public Attack(int id, String name, int typeId, int power, String category, int secondaryEffectId) {
+    public Attack(int id, String name, int typeId, int power, String category,
+                  int secondaryEffectId) {
         this.id = id;
         this.name = name;
         this.typeId = typeId;
