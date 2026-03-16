@@ -105,4 +105,33 @@ public class Pokemon {
     public void setHeldItem(Item heldItem) { this.heldItem = heldItem; }
 
     public Item getHeldItem() { return heldItem; }
+
+    public int getEffectiveStat(String statName, int baseValue) {
+        // If no item is held or it doesn't affect this stat, return base value
+        if (heldItem == null || !heldItem.getAffectedStat().equalsIgnoreCase(statName)) {
+            return baseValue;
+        }
+
+        // Apply the modifier (e.g., 1.5 for a 50% boost)
+        return (int) (baseValue * heldItem.getModifier());
+    }
+
+    public void applyEndOfTurnItems() {
+        if (heldItem != null && "HEAL_TURN".equals(heldItem.getEffectType())) {
+            int healAmount = (int) (this.hp * heldItem.getModifier());
+            this.setCurrentHp(this.currentHp + healAmount);
+            System.out.println(this.name + " restored HP using " + heldItem.getName());
+        }
+    }
+
+    public void checkConsumableItems() {
+        if (heldItem != null && "HEAL_ONCE".equals(heldItem.getEffectType())) {
+            if (this.currentHp > 0 && this.currentHp <= (this.hp / 2)) {
+                int healAmount = (int) (this.hp * heldItem.getModifier());
+                this.setCurrentHp(this.currentHp + healAmount);
+                System.out.println(this.name + " consumed " + heldItem.getName() + " and restored HP.");
+                this.heldItem = null; // Item is consumed and disappears
+            }
+        }
+    }
 }
