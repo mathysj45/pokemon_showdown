@@ -1,4 +1,4 @@
-package com.example.pokemon_showdown.Controller.view;
+package com.example.pokemon_showdown.Controller.view.team;
 
 import com.example.pokemon_showdown.Classes.Item;
 import com.example.pokemon_showdown.Classes.Pokemon;

@@ -8,9 +8,12 @@ module com.example.pokemon_showdown {
     exports com.example.pokemon_showdown;
     exports com.example.pokemon_showdown.Classes;
     exports com.example.pokemon_showdown.Controller;
-    exports com.example.pokemon_showdown.Controller.view;
+//    exports com.example.pokemon_showdown.Controller.view;
+    exports com.example.pokemon_showdown.Controller.view.team;
     opens com.example.pokemon_showdown to javafx.fxml;
     opens com.example.pokemon_showdown.Classes to javafx.fxml;
     opens com.example.pokemon_showdown.Controller to javafx.fxml;
-    opens com.example.pokemon_showdown.Controller.view to javafx.fxml;
+//    opens com.example.pokemon_showdown.Controller.view to javafx.fxml;
+    opens com.example.pokemon_showdown.Controller.view.team to javafx.fxml;
+    opens com.example.pokemon_showdown.Controller.view.menu to javafx.fxml;
 }

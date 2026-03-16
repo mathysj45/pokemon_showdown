@@ -1,10 +1,9 @@
-package com.example.pokemon_showdown.Controller.view;
+package com.example.pokemon_showdown.Controller.view.team;
 
 import com.example.pokemon_showdown.Classes.Item;
 import com.example.pokemon_showdown.Classes.Pokemon;
 import com.example.pokemon_showdown.Classes.Team;
 import com.example.pokemon_showdown.Database.DatabaseManager;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
