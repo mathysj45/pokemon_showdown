@@ -1,6 +1,7 @@
 package com.example.pokemon_showdown.Database;
 
 import com.example.pokemon_showdown.Classes.Attack;
+import com.example.pokemon_showdown.Classes.Item;
 import com.example.pokemon_showdown.Classes.Pokemon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,5 +73,28 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return attacks;
+    }
+
+
+    public ObservableList<Item> getAllItems() {
+        ObservableList<Item> itemList = FXCollections.observableArrayList();
+        String query = "SELECT * FROM item";
+
+        try (Connection conn = ConnectionMySQL.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                itemList.add(new Item(
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("affected_stat"),
+                        rs.getDouble("modifier")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemList;
     }
 }

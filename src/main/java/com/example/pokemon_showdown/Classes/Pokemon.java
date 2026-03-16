@@ -15,6 +15,7 @@ public class Pokemon {
     private int type;
     private Integer type2;
     private List<Attack> moves;
+    private Item heldItem;
 
     public Pokemon(int id, String name, int hp,
                    int attack, int defense, int spe_attack,
@@ -32,6 +33,21 @@ public class Pokemon {
         this.type = type;
         this.type2 = type2;
         this.moves = moves;
+    }
+
+    public Pokemon(Pokemon other) {
+        this.id = other.id;
+        this.name = other.name;
+        this.hp = other.hp;
+        this.currentHp = other.hp;
+        this.attack = other.attack;
+        this.defense = other.defense;
+        this.spe_attack = other.spe_attack;
+        this.spe_defense = other.spe_defense;
+        this.speed = other.speed;
+        this.type = other.type;
+        this.type2 = other.type2;
+        this.moves = other.moves;
     }
 
     public int getId() { return id; }
@@ -86,4 +102,8 @@ public class Pokemon {
     public List<Attack> getMoves() { return moves; }
 
     public void setMoves(List<Attack> moves) { this.moves = moves; }
+
+    public void setHeldItem(Item heldItem) { this.heldItem = heldItem; }
+
+    public Item getHeldItem() { return heldItem; }
 }
