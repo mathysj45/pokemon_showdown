@@ -14,8 +14,10 @@ public class Team {
         return false;
     }
 
-    public void removeMember(Pokemon p) {
-        members.remove(p);
+    public void removeMember(int index) {
+        if (index >= 0 && index < members.size()){
+            members.remove(index);
+        }
     }
 
     public List<Pokemon> getMembers() {
