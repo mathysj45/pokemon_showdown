@@ -86,7 +86,7 @@
                       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
             </GridPane>
         </HBox>
-        <ComboBox fx:id="chooseItem" styleClass="informationArea"
+        <ComboBox fx:id="itemComboBox" styleClass="informationArea"
                   prefWidth="150.0"
                   promptText="Item...">
         </ComboBox>
