@@ -88,8 +88,6 @@ public class TeamBuilderController {
             fightButton.setDisable(!Team.isValid());
             System.out.println("Pokémon retiré. Taille équipe : " + teamListView.getItems().size());
         }
-
-
     }
 
 }
