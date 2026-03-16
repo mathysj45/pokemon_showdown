@@ -99,8 +99,11 @@
                 <Button text="Ajouter" onAction="#addPokemonToTeam" />
             </HBox>
             <ListView fx:id="teamListView" prefHeight="200.0" />
-            <Button text="Retirer du Pokémon" onAction="#removePokemonFromTeam" styleClass="deleteButton" />
-            <Button fx:id="fightButton" text="Démarrer le combat" disable="true" />
+            <HBox spacing="6" alignment="CENTER">
+                <Button text="Retirer"
+                        onAction="#removePokemonFromTeam" styleClass="deleteButton" />
+                <Button fx:id="fightButton" text="Démarrer le combat" disable="true" />
+            </HBox>
         </children>
     </VBox>
 </FlowPane>
