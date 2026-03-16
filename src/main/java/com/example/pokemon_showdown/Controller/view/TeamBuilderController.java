@@ -15,6 +15,8 @@ public class TeamBuilderController {
     @FXML private ComboBox<Pokemon> teamBuilder;
     @FXML private ListView<String> teamListView;
     @FXML private Button fightButton;
+    @FXML private StatsView statsView;
+    @FXML private Team Team = new Team();
 
     @FXML private Text pokemonName;
     @FXML private Text pokemonType1Data;
@@ -30,8 +32,6 @@ public class TeamBuilderController {
     @FXML private Text pokemonMove3Data;
     @FXML private Text pokemonMove4Data;
 
-    private StatsView statsView;
-    private Team myTeam = new Team();
 
     @FXML
     public void initialize() {
@@ -45,7 +45,8 @@ public class TeamBuilderController {
         DatabaseManager dbManager = new DatabaseManager();
         teamBuilder.setItems(dbManager.getAllPokemons());
 
-        teamBuilder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        teamBuilder.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
             if (newValue != null) {
                 this.statsView.updateInterface(newValue);
             }
@@ -64,8 +65,6 @@ public class TeamBuilderController {
         });
     }
 
-    private Team Team = new Team();
-
     @FXML
     private void addPokemonToTeam() {
         Pokemon selectedPokemon = teamBuilder.getSelectionModel().getSelectedItem();
@@ -78,4 +77,19 @@ public class TeamBuilderController {
             System.out.println("Cannot add: Team full (Max 6) or empty selection.");
         }
     }
+
+    @FXML
+    private void removePokemonFromTeam() {
+        int selectedIndex = teamListView.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            Team.removeMember(selectedIndex);
+            teamListView.getItems().remove(selectedIndex);
+            fightButton.setDisable(!Team.isValid());
+            System.out.println("Pokémon retiré. Taille équipe : " + teamListView.getItems().size());
+        }
+
+
+    }
+
 }
