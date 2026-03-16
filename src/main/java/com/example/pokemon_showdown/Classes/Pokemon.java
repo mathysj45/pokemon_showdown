@@ -65,7 +65,6 @@ public class Pokemon {
     public int getCurrentHp() { return currentHp; }
 
     public void setCurrentHp(int currentHp) {
-        // Empêche les PV de descendre sous 0 ou de dépasser le Max
         this.currentHp = Math.max(0, Math.min(hp, currentHp));
     }
 

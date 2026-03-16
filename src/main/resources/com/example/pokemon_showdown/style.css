@@ -44,8 +44,6 @@
     -fx-background-color: transparent;
 }
 
-
-
 #contain {
     -fx-background-image: url("rise.jpg");
     -fx-background-size: cover;
@@ -87,8 +85,8 @@
 
 #pokemonListTop,
 #teamListView,
-#teamBuilder,
-#containStats {
+#containStats,
+.selectArea {
     -fx-background-color: -fx-background-color-primary;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0.0, 0, 5);
     -fx-background-radius: 15px;
@@ -99,14 +97,14 @@
     -fx-border-color: -fx-background-color-border;
 }
 
+.selectArea {
+    -fx-padding: 0;
+    -fx-effect: none;
+}
+
 #pokemonSprite {
     -fx-max-width: 50px;
     -fx-max-height: 50px;
-}
-
-#teamBuilder {
-    -fx-padding: 0;
-    -fx-effect: none;
 }
 
 #teamListView {

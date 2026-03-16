@@ -63,7 +63,8 @@ public class TeamBuilderView {
 
     private void setupComboBoxes() {
         teamBuilder.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
+                (observable, oldValue,
+                 newValue) -> {
                     if (newValue != null) {
                         this.statsView.updateInterface(newValue);
                     }
@@ -96,7 +97,8 @@ public class TeamBuilderView {
 
     @FXML
     private void addPokemonToTeam() {
-        Pokemon selectedPokemon = teamBuilder.getSelectionModel().getSelectedItem();
+        Pokemon selectedPokemon = teamBuilder.getSelectionModel().
+                                                             getSelectedItem();
         Item selectedItem = itemComboBox.getSelectionModel().getSelectedItem();
 
         if (selectedPokemon != null && selectedItem != null) {
@@ -106,7 +108,8 @@ public class TeamBuilderView {
             boolean isSuccess = team.addMember(pokemonToAdd);
 
             if (isSuccess) {
-                teamListView.getItems().add(pokemonToAdd.getName() + " (@" + selectedItem.getName() + ")");
+                teamListView.getItems().add(pokemonToAdd.getName() + " (@" +
+                        selectedItem.getName() + ")");
                 fightButton.setDisable(!team.isValid());
             } else {
                 System.out.println("Cannot add: Team full or invalid selection.");
@@ -124,7 +127,8 @@ public class TeamBuilderView {
             team.removeMember(selectedIndex);
             teamListView.getItems().remove(selectedIndex);
             fightButton.setDisable(!team.isValid());
-            System.out.println("Pokémon retiré. Taille équipe : " + teamListView.getItems().size());
+            System.out.println("Pokémon retiré. Taille équipe : " +
+                                                teamListView.getItems().size());
         }
     }
 }

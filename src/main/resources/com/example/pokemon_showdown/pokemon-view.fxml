@@ -6,12 +6,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.geometry.Insets?>
+
 <FlowPane fx:id="contain"
           xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
@@ -20,7 +19,7 @@
     <VBox fx:id="containStats" alignment="CENTER" spacing="40.0">
         <HBox alignment="CENTER" spacing="40.0">
 
-            <VBox alignment="CENTER" spacing="10.0">
+            <VBox alignment="CENTER" spacing="20.0">
                 <Text fx:id="pokemonName" text="Name"/>
                 <ImageView fx:id="pokemonSprite" fitWidth="70.0"
                            fitHeight="70.0" preserveRatio="true"/>
@@ -37,8 +36,6 @@
                 <Text fx:id="pokemonType1Data" styleClass="dataArea"
                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <Text fx:id="pokemonType2Data" styleClass="dataArea"
-                      GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                <Text fx:id="pokemonItemData" styleClass="dataArea"
                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
             </GridPane>
 
@@ -86,7 +83,7 @@
                       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
             </GridPane>
         </HBox>
-        <ComboBox fx:id="itemComboBox" styleClass="informationArea"
+        <ComboBox fx:id="itemComboBox" styleClass="selectArea"
                   prefWidth="150.0"
                   promptText="Item...">
         </ComboBox>
@@ -94,19 +91,21 @@
 
     <VBox fx:id="pokemonListTop"  alignment="CENTER" spacing="5.0">
         <children>
-            <Label
-                    fx:id="pokemonSelect"
-                    text="Sélectionnez vos monstres (3 minimum)" styleClass="informationArea"/>
+            <Label fx:id="pokemonSelect"
+                   text="Sélectionnez vos monstres (3 minimum)"
+                   styleClass="informationArea"/>
             <HBox fx:id="pokemonList" spacing="6" alignment="CENTER">
-                <ComboBox fx:id="teamBuilder" styleClass="informationArea" prefWidth="150.0"
-                          promptText="Choisir..." />
+                <ComboBox fx:id="teamBuilder" styleClass="selectArea"
+                          prefWidth="150.0" promptText="Choisir..." />
                 <Button text="Ajouter" onAction="#addPokemonToTeam" />
             </HBox>
             <ListView fx:id="teamListView" prefHeight="200.0" />
             <HBox spacing="6" alignment="CENTER">
                 <Button text="Retirer"
-                        onAction="#removePokemonFromTeam" styleClass="deleteButton" />
-                <Button fx:id="fightButton" text="Démarrer le combat" disable="true" />
+                        onAction="#removePokemonFromTeam"
+                        styleClass="deleteButton" />
+                <Button fx:id="fightButton" text="Démarrer le combat"
+                        disable="true" />
             </HBox>
         </children>
     </VBox>
