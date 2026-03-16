@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : db
--- Généré le : lun. 16 mars 2026 à 13:35
--- Version du serveur : 5.7.44
--- Version de PHP : 8.3.26
+-- Hôte : 127.0.0.1
+-- Généré le : lun. 16 mars 2026 à 15:39
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,7 @@ CREATE TABLE `attack` (
   `type_id` int(11) NOT NULL,
   `category` varchar(255) NOT NULL,
   `secondary_effect_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Déchargement des données de la table `attack`
@@ -60,9 +60,9 @@ CREATE TABLE `item` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `affected_stat` varchar(50) DEFAULT NULL,
-  `modifier` double DEFAULT '1',
+  `modifier` double DEFAULT 1,
   `effect_type` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `item`
@@ -92,7 +92,7 @@ CREATE TABLE `pokemon` (
   `spe_attack` int(11) NOT NULL,
   `spe_defense` int(11) NOT NULL,
   `speed` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `pokemon`
@@ -119,7 +119,7 @@ INSERT INTO `pokemon` (`id`, `name`, `type`, `type2`, `hp`, `attack`, `defense`,
 CREATE TABLE `pokemon_attacks` (
   `id_attacks` int(11) NOT NULL,
   `id_pokemon` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Déchargement des données de la table `pokemon_attacks`
@@ -146,7 +146,7 @@ INSERT INTO `pokemon_attacks` (`id_attacks`, `id_pokemon`) VALUES
 CREATE TABLE `type` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `type`
