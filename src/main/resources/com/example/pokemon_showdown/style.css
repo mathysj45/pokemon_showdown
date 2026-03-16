@@ -20,6 +20,8 @@
     /*-fx-gap-xl: 1.25rem;*/
 
     /*-fx-borderRadius: 15px;*/
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-color;
 }
 
 .list-view {
@@ -30,9 +32,12 @@
 }
 
 .list-cell {
-    -fx-background-color: transparent;
-    -fx-text-fill: -fx-text-color;
     -fx-border-radius: 15px;
+    -fx-background-color: transparent;
+}
+
+.list-cell:hover {
+    -fx-text-fill: -fx-button-colorBack;
 }
 
 .list-cell:selected {
@@ -57,12 +62,12 @@
 
 #containStats {
     -fx-min-height: 200px;
+    -fx-max-height: 220px;
     -fx-min-width: 470px;
     -fx-alignment: center;
     -fx-spacing: 3em;
     -fx-padding: 3em;
     -fx-hgap: 200px;
-    -fx-font-weight: bold;
 }
 
 .button {
@@ -112,9 +117,6 @@
     -fx-background-color: transparent;
 }
 
-#chooseItem {
-    -fx-background-color: transparent;
-    -fx-control-inner-background: transparent;
-    -fx-control-inner-background-alt: transparent;
-    -fx-background-insets: 0;
+#pokemonMoveInfo {
+    -fx-spacing: 10px;
 }

@@ -15,14 +15,14 @@ import javafx.util.StringConverter;
 
 public class TeamBuilderView {
 
-    @FXML private ComboBox<Pokemon> teamBuilder;
-    @FXML private ComboBox<Item> itemComboBox;
-    @FXML private ListView<String> teamListView;
-    @FXML private Button fightButton;
+    @FXML protected ComboBox<Pokemon> teamBuilder;
+    @FXML protected ComboBox<Item> itemComboBox;
+    @FXML protected ListView<String> teamListView;
+    @FXML protected Button fightButton;
     @FXML private ImageView pokemonSprite;
 
     private StatsView statsView;
-    private Team team = new Team();
+    protected Team team = new Team();
 
     @FXML private Text pokemonName;
     @FXML private Text pokemonType1Data;
@@ -42,7 +42,9 @@ public class TeamBuilderView {
     public void initialize() {
         initializeStatsView();
         loadDatabaseData();
-        setupComboBoxes();
+        setupComboBoxesStats();
+        setupComboBoxesNames();
+        setupComboBoxesItems();
     }
 
     private void initializeStatsView() {
@@ -61,7 +63,7 @@ public class TeamBuilderView {
         itemComboBox.setItems(dbManager.getAllItems());
     }
 
-    private void setupComboBoxes() {
+    private void setupComboBoxesStats() {
         teamBuilder.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue,
                  newValue) -> {
@@ -69,6 +71,8 @@ public class TeamBuilderView {
                         this.statsView.updateInterface(newValue);
                     }
                 });
+    }
+    private void setupComboBoxesNames() {
 
         teamBuilder.setConverter(new StringConverter<Pokemon>() {
             @Override
@@ -81,6 +85,9 @@ public class TeamBuilderView {
                 return null;
             }
         });
+    }
+
+    private void setupComboBoxesItems() {
 
         itemComboBox.setConverter(new StringConverter<Item>() {
             @Override
@@ -93,42 +100,5 @@ public class TeamBuilderView {
                 return null;
             }
         });
-    }
-
-    @FXML
-    private void addPokemonToTeam() {
-        Pokemon selectedPokemon = teamBuilder.getSelectionModel().
-                                                             getSelectedItem();
-        Item selectedItem = itemComboBox.getSelectionModel().getSelectedItem();
-
-        if (selectedPokemon != null && selectedItem != null) {
-            Pokemon pokemonToAdd = new Pokemon(selectedPokemon);
-            pokemonToAdd.setHeldItem(selectedItem);
-
-            boolean isSuccess = team.addMember(pokemonToAdd);
-
-            if (isSuccess) {
-                teamListView.getItems().add(pokemonToAdd.getName() + " (@" +
-                        selectedItem.getName() + ")");
-                fightButton.setDisable(!team.isValid());
-            } else {
-                System.out.println("Cannot add: Team full or invalid selection.");
-            }
-        } else {
-            System.out.println("Please select both a Pokémon and an Item.");
-        }
-    }
-
-    @FXML
-    private void removePokemonFromTeam() {
-        int selectedIndex = teamListView.getSelectionModel().getSelectedIndex();
-
-        if (selectedIndex >= 0) {
-            team.removeMember(selectedIndex);
-            teamListView.getItems().remove(selectedIndex);
-            fightButton.setDisable(!team.isValid());
-            System.out.println("Pokémon retiré. Taille équipe : " +
-                                                teamListView.getItems().size());
-        }
     }
 }
