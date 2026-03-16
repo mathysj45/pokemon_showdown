@@ -70,6 +70,20 @@
     -fx-hgap: 200px;
 }
 
+#theButton {
+    -fx-font-size: 32px
+}
+
+#theButton:hover {
+    -fx-scale-x: 2.5;
+    -fx-scale-y: 2.5;
+}
+
+#menuContent{
+    -fx-background-image: url("mhst3.jpg");
+    -fx-background-size: cover;
+}
+
 .button {
     -fx-border-radius: 15px;
     -fx-background-radius: 15px;

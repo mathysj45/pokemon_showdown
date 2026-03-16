@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.
-                                getResource("pokemon-view.fxml"));
+                                getResource("main_window.fxml"));
         Scene mainScene = new Scene(fxmlLoader.load(), 500, 615);
 
         String cssPath = Objects.requireNonNull(Main.class.
