@@ -1,5 +1,6 @@
 package com.example.pokemon_showdown.Controller.view;
 
+import com.example.pokemon_showdown.Classes.Item;
 import com.example.pokemon_showdown.Classes.Pokemon;
 import com.example.pokemon_showdown.Classes.Team;
 import com.example.pokemon_showdown.Database.DatabaseManager;
@@ -9,14 +10,16 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import javafx.collections.ObservableList;
 
 public class TeamBuilderController {
 
     @FXML private ComboBox<Pokemon> teamBuilder;
+    @FXML private ComboBox<Item> itemComboBox;
     @FXML private ListView<String> teamListView;
     @FXML private Button fightButton;
     @FXML private StatsView statsView;
-    @FXML private Team Team = new Team();
+    @FXML private Team team = new Team();
 
     @FXML private Text pokemonName;
     @FXML private Text pokemonType1Data;
@@ -63,18 +66,39 @@ public class TeamBuilderController {
                 return null;
             }
         });
+
+        ObservableList<Item> items = dbManager.getAllItems();
+        itemComboBox.setItems(items);
+
+        itemComboBox.setConverter(new StringConverter<Item>() {
+            @Override
+            public String toString(Item item) {
+                return (item == null) ? "" : item.getName();
+            }
+            @Override
+            public Item fromString(String string) { return null; }
+        });
     }
 
     @FXML
     private void addPokemonToTeam() {
-        Pokemon selectedPokemon = teamBuilder.getSelectionModel().getSelectedItem();
-        boolean isSuccess = Team.addMember(selectedPokemon);
+        Pokemon selection = teamBuilder.getSelectionModel().getSelectedItem();
+        Item selectedItem = itemComboBox.getSelectionModel().getSelectedItem();
 
-        if (isSuccess) {
-            teamListView.getItems().add(selectedPokemon.getName());
-            fightButton.setDisable(!Team.isValid());
+        if (selection != null && selectedItem != null) {
+            Pokemon pokemonToAdd = new Pokemon(selection);
+            pokemonToAdd.setHeldItem(selectedItem);
+
+            boolean isSuccess = team.addMember(pokemonToAdd);
+
+            if (isSuccess) {
+                teamListView.getItems().add(pokemonToAdd.getName() + " (@" + selectedItem.getName() + ")");
+                fightButton.setDisable(!team.isValid());
+            } else {
+                System.out.println("Cannot add: Team full or invalid selection.");
+            }
         } else {
-            System.out.println("Cannot add: Team full (Max 6) or empty selection.");
+            System.out.println("Please select both a Pokémon and an Item.");
         }
     }
 
@@ -83,9 +107,9 @@ public class TeamBuilderController {
         int selectedIndex = teamListView.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Team.removeMember(selectedIndex);
+            team.removeMember(selectedIndex);
             teamListView.getItems().remove(selectedIndex);
-            fightButton.setDisable(!Team.isValid());
+            fightButton.setDisable(!team.isValid());
             System.out.println("Pokémon retiré. Taille équipe : " + teamListView.getItems().size());
         }
     }
