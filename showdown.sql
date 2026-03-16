@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : ven. 13 mars 2026 à 13:10
+-- Généré le : lun. 16 mars 2026 à 13:35
 -- Version du serveur : 5.7.44
 -- Version de PHP : 8.3.26
 
@@ -52,12 +52,37 @@ INSERT INTO `attack` (`id`, `name`, `power`, `type_id`, `category`, `secondary_e
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `item`
+--
+
+CREATE TABLE `item` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `affected_stat` varchar(50) DEFAULT NULL,
+  `modifier` double DEFAULT '1',
+  `effect_type` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `item`
+--
+
+INSERT INTO `item` (`id`, `name`, `description`, `affected_stat`, `modifier`, `effect_type`) VALUES
+(1, 'Leftovers', 'Heals 1/16 HP at the end of turn', 'hp', 0.0625, 'HEAL_TURN'),
+(2, 'Life Orb', 'Boosts damage but costs 10% HP', 'all', 1.3, 'DAMAGE_BOOST_RECOIL'),
+(3, 'Sitrus Berry', 'Heals 25% HP when health is low', 'hp', 0.25, 'HEAL_ONCE'),
+(4, 'Rocky Helmet', 'Damages attacker on physical contact', 'hp', 0.16, 'REFLECT'),
+(5, 'Focus Sash', 'Prevents 1-hit KO if HP is full', 'hp', 1, 'ENDURE');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `pokemon`
 --
 
 CREATE TABLE `pokemon` (
   `id` int(11) NOT NULL,
-  `sprite` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `type` int(11) NOT NULL,
   `type2` int(11) DEFAULT NULL,
@@ -73,18 +98,17 @@ CREATE TABLE `pokemon` (
 -- Déchargement des données de la table `pokemon`
 --
 
-INSERT INTO `pokemon` (`id`, `sprite`, `name`, `type`, `type2`, `hp`,
-                       `attack`, `defense`, `spe_attack`, `spe_defense`, `speed`) VALUES
-(1, NULL, 'Rathalos', 2, 10, 360, 267, 255, 317, 269, 299),
-(2, NULL, 'Fatalis', 14, 15, 504, 339, 299, 339, 299, 279),
-(3, NULL, 'Rey Dau', 15, 5, 404, 399, 339, 339, 299, 279),
-(4, NULL, 'Hermitaur daimyo', 3, NULL, 346, 245, 275, 339, 277, 217),
-(5, NULL, 'Alatreon', 2, 6, 404, 339, 299, 399, 339, 279),
-(6, NULL, 'Zinogre', 5, NULL, 362, 309, 239, 389, 259, 301),
-(7, NULL, 'Mizutsune', 3, 2, 364, 319, 339, 359, 279, 239),
-(8, NULL, 'Nergigante', 7, 1, 334, 371, 287, 207, 291, 370),
-(9, NULL, 'Brachydios', 2, 7, 424, 395, 249, 319, 319, 249),
-(10, NULL, 'Arkveild', 5, 15, 404, 269, 299, 369, 329, 369);
+INSERT INTO `pokemon` (`id`, `name`, `type`, `type2`, `hp`, `attack`, `defense`, `spe_attack`, `spe_defense`, `speed`) VALUES
+(1, 'Rathalos', 2, 10, 360, 267, 255, 317, 269, 299),
+(2, 'Fatalis', 14, 15, 504, 339, 299, 339, 299, 279),
+(3, 'Rey Dau', 15, 5, 404, 399, 339, 339, 299, 279),
+(4, 'Hermitaur daimyo', 3, NULL, 346, 245, 275, 339, 277, 217),
+(5, 'Alatreon', 2, 6, 404, 339, 299, 399, 339, 279),
+(6, 'Zinogre', 5, NULL, 362, 309, 239, 389, 259, 301),
+(7, 'Mizutsune', 3, 2, 364, 319, 339, 359, 279, 239),
+(8, 'Nergigante', 7, 1, 334, 371, 287, 207, 291, 370),
+(9, 'Brachydios', 2, 7, 424, 395, 249, 319, 319, 249),
+(10, 'Arkveld', 5, 15, 404, 269, 299, 369, 329, 369);
 
 -- --------------------------------------------------------
 
@@ -160,6 +184,12 @@ ALTER TABLE `attack`
   ADD KEY `type_id` (`type_id`);
 
 --
+-- Index pour la table `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `pokemon`
 --
 ALTER TABLE `pokemon`
@@ -189,6 +219,12 @@ ALTER TABLE `type`
 --
 ALTER TABLE `attack`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT pour la table `item`
+--
+ALTER TABLE `item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `pokemon`

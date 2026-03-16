@@ -89,7 +89,8 @@ public class DatabaseManager {
                         rs.getString("name"),
                         rs.getString("description"),
                         rs.getString("affected_stat"),
-                        rs.getDouble("modifier")
+                        rs.getDouble("modifier"),
+                        rs.getString("effect_type") // Matches your screenshot
                 ));
             }
         } catch (SQLException e) {
