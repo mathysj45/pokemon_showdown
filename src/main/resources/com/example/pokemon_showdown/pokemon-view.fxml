@@ -100,13 +100,13 @@
             <Label fx:id="pokemonSelect"
                    text="Sélectionnez vos monstres (3 minimum)"
                    styleClass="informationArea"/>
-            <HBox fx:id="pokemonList" spacing="6" alignment="CENTER">
+            <HBox fx:id="pokemonList" spacing="10" alignment="CENTER">
                 <ComboBox fx:id="teamBuilder" styleClass="selectArea"
                           prefWidth="200.0" promptText="Choisir..." />
                 <Button text="Ajouter" onAction="#addPokemonToTeam" />
             </HBox>
             <ListView fx:id="teamListView" prefHeight="200.0" />
-            <HBox spacing="6" alignment="CENTER">
+            <HBox spacing="15" alignment="CENTER">
                 <Button text="Retirer"
                         onAction="#removePokemonFromTeam"
                         styleClass="deleteButton" />
