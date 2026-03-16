@@ -2,8 +2,11 @@
     -fx-text-color: #03071e;
     -fx-text-secondary-color: #2b2d42;
 
+    -fx-background-color-primary: #fefae0;
+    -fx-background-color-border: #bdb2ff;
+
     -fx-button-colorBack: #3a0ca3;
-    -fx-button-hover: #3f37c9;
+    -fx-button-hover: #bdb2ff;
     -fx-text-button-color: #fdf0d5;
 
     /*-fx-padding-s: 0.5rem;*/
@@ -17,6 +20,20 @@
     /*-fx-gap-xl: 1.25rem;*/
 
     /*-fx-borderRadius: 15px;*/
+}
+
+.list-view {
+    -fx-padding: 0;
+    -fx-border-radius: 15px;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-color;
+}
+
+.list-cell:empty {
+    -fx-background-color: transparent;
 }
 
 #contain {
@@ -57,4 +74,23 @@
     -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 0, 1), 0, 0, 0, 0);
     -fx-background-color: -fx-text-button-color;
     -fx-text-fill: -fx-button-colorBack;
+}
+
+#pokemonListTop,
+#teamListView,
+#teamBuilder{
+    -fx-background-color: -fx-background-color-primary;
+    -fx-background-radius: 15px;
+    -fx-padding: 1em;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15px;
+    -fx-border-color: -fx-background-color-border;
+}
+
+#teamBuilder {
+    -fx-padding: 0;
+}
+
+#teamListView {
+    -fx-background-color: transparent;
 }

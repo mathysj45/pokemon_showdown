@@ -88,10 +88,12 @@
 
     </HBox>
 
-    <VBox alignment="CENTER" spacing="5.0">
+    <VBox fx:id="pokemonListTop"  alignment="CENTER" spacing="5.0">
         <children>
-            <Label text="Sélectionnez vos monstres (3 minimum)" styleClass="informationArea"/>
-            <HBox spacing="6" alignment="CENTER">
+            <Label
+                    fx:id="pokemonSelect"
+                    text="Sélectionnez vos monstres (3 minimum)" styleClass="informationArea"/>
+            <HBox fx:id="pokemonList" spacing="6" alignment="CENTER">
                 <ComboBox fx:id="teamBuilder" styleClass="informationArea" prefWidth="150.0"
                           promptText="Choisir..." />
                 <Button text="Ajouter" onAction="#addPokemonToTeam" />
