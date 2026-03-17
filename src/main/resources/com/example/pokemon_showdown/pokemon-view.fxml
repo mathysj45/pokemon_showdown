@@ -111,7 +111,7 @@
                         onAction="#removePokemonFromTeam"
                         styleClass="deleteButton" />
                 <Button fx:id="fightButton" text="Démarrer le combat"
-                        disable="true" />
+                        onAction="#launchBattle" disable="true" />
             </HBox>
         </children>
     </VBox>

@@ -16,4 +16,6 @@ module com.example.pokemon_showdown {
 //    opens com.example.pokemon_showdown.Controller.view to javafx.fxml;
     opens com.example.pokemon_showdown.Controller.view.team to javafx.fxml;
     opens com.example.pokemon_showdown.Controller.view.menu to javafx.fxml;
+    exports com.example.pokemon_showdown.Controller.view.battle;
+    opens com.example.pokemon_showdown.Controller.view.battle to javafx.fxml;
 }
