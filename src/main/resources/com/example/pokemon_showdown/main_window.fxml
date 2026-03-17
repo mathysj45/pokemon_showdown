@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Button?>
+
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.pokemon_showdown.Controller.view.menu.MainMenuView">
+
+    <StackPane fx:id="appContent" visible="false">
+        <fx:include source="pokemon-view.fxml"/>
+    </StackPane>
+
+    <StackPane fx:id="menuContent" alignment="CENTER" >
+        <Button fx:id="theButton" text="Démarrer"
+                onAction="#launchApplication"/>
+    </StackPane>
+
+</StackPane>
