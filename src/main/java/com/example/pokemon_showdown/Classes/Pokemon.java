@@ -64,8 +64,17 @@ public class Pokemon {
 
     public int getCurrentHp() { return currentHp; }
 
-    public void setCurrentHp(int currentHp) {
-        this.currentHp = Math.max(0, Math.min(hp, currentHp));
+    public void setCurrentHp(int newHp) {
+        if (newHp <= 0 && this.currentHp == this.hp && heldItem != null &&
+                "ENDURE".equals(heldItem.getEffectType())) {
+            this.currentHp = 1;
+            this.heldItem = null; // Item consumed
+            System.out.println(this.name + "Il a survécu ! Merci, la ceinture force.");
+        }
+
+        else {
+            this.currentHp = Math.max(0, Math.min(this.hp, newHp));
+        }
     }
 
     public int getAttack() { return attack; }
@@ -119,7 +128,7 @@ public class Pokemon {
         if (heldItem != null && "HEAL_TURN".equals(heldItem.getEffectType())) {
             int healAmount = (int) (this.hp * heldItem.getModifier());
             this.setCurrentHp(this.currentHp + healAmount);
-            System.out.println(this.name + " restored HP using " + heldItem.getName());
+            System.out.println(this.name + " récupère des HP " + heldItem.getName());
         }
     }
 
@@ -128,9 +137,26 @@ public class Pokemon {
             if (this.currentHp > 0 && this.currentHp <= (this.hp / 2)) {
                 int healAmount = (int) (this.hp * heldItem.getModifier());
                 this.setCurrentHp(this.currentHp + healAmount);
-                System.out.println(this.name + " consumed " + heldItem.getName() + " and restored HP.");
+                System.out.println(this.name + " consomme " + heldItem.getName() + " et restore ses HP.");
                 this.heldItem = null; // Item is consumed and disappears
             }
+        }
+    }
+
+    public void applyRockyHelmet(Pokemon attacker){
+        if (heldItem != null && "REFLECT".equals(heldItem.getEffectType())){
+            int recoilDamage = (int) (attacker.getHp() * heldItem.getModifier());
+            attacker.setCurrentHp(attacker.getCurrentHp() - recoilDamage);
+            System.out.println(attacker.getName() + "a été blesser par le casque brut !");
+        }
+    }
+
+    public void applyLifeOrbRecoil() {
+        if (heldItem != null && "DAMAGE_BOOST_RECOIL".equals(heldItem.getEffectType())) {
+            // Calculate 10% of MAX HP
+            int recoil = (int) (this.hp * 0.10);
+            this.setCurrentHp(this.currentHp - recoil);
+            System.out.println(this.name + " lost some HP due to its Life Orb!");
         }
     }
 }
