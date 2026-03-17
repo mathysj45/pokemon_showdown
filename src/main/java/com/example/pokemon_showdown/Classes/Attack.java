@@ -1,22 +1,24 @@
 package com.example.pokemon_showdown.Classes;
 
+public abstract class Attack {
+    protected int id;
+    protected String name;
+    protected int power;
+    protected int typeId;
+    protected String category;
 
-public class Attack {
-    private int id;
-    private String name;
-    private int power;
-    private int typeId;
-    private String category;
-    private int secondaryEffectId;
-
-    public Attack(int id, String name, int typeId, int power, String category,
-                  int secondaryEffectId) {
+    public Attack(int id, String name, int typeId, int power, String category) {
         this.id = id;
         this.name = name;
         this.typeId = typeId;
         this.power = power;
         this.category = category;
-        this.secondaryEffectId = secondaryEffectId;
+    }
+
+    public abstract int calculateDamage(Pokemon attacker, Pokemon target);
+
+    protected double getBaseFormula(int atk, int def, int power) {
+        return ((((2 * 100.0 / 5) + 2) * power * ((double) atk / def)) / 50) + 2;
     }
 
     public int getId() {
@@ -59,12 +61,6 @@ public class Attack {
         this.category = category;
     }
 
-    public int getSecondaryEffectId() {
-        return secondaryEffectId;
-    }
 
-    public void setSecondaryEffectId(int secondaryEffectId) {
-        this.secondaryEffectId = secondaryEffectId;
-    }
 }
 

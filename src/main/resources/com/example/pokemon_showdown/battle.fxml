@@ -67,10 +67,10 @@
               spacing="10.0">
             <Text>CAPACITES</Text>
             <HBox spacing="10.0">
-                <Button fx:id="pokemonMove1Data" styleClass="attackArea"/>
-                <Button fx:id="pokemonMove2Data" styleClass="attackArea"/>
-                <Button fx:id="pokemonMove3Data" styleClass="attackArea"/>
-                <Button fx:id="pokemonMove4Data" styleClass="attackArea"/>
+                <Button fx:id="pokemonMove1Data" onAction="#onMove1Clicked" styleClass="attackArea"/>
+                <Button fx:id="pokemonMove2Data" onAction="#onMove2Clicked" styleClass="attackArea"/>
+                <Button fx:id="pokemonMove3Data" onAction="#onMove3Clicked" styleClass="attackArea"/>
+                <Button fx:id="pokemonMove4Data" onAction="#onMove4Clicked" styleClass="attackArea"/>
             </HBox>
 
             <Text>POKEMON</Text>

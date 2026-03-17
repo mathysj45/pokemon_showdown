@@ -1,9 +1,6 @@
 package com.example.pokemon_showdown.Database;
 
-import com.example.pokemon_showdown.Classes.Attack;
-import com.example.pokemon_showdown.Classes.Item;
-import com.example.pokemon_showdown.Classes.Pokemon;
-import com.example.pokemon_showdown.Classes.Team;
+import com.example.pokemon_showdown.Classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -61,14 +58,17 @@ public class DatabaseManager {
             pstmt.setInt(1, pokemonId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    attacks.add(new Attack(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getInt("power"),
-                            rs.getInt("type_id"),
-                            rs.getString("category"),
-                            rs.getInt("secondary_effect_id")
-                    ));
+                    String category = rs.getString("category");
+                    Attack attack;
+
+                    if ("physical".equalsIgnoreCase(category)) {
+                        attack = new PhysicalAttack(rs.getInt("id"), rs.getString("name"),
+                                rs.getInt("type_id"), rs.getInt("power"));
+                    } else {
+                        attack = new SpecialAttack(rs.getInt("id"), rs.getString("name"),
+                                rs.getInt("type_id"), rs.getInt("power"));
+                    }
+                    attacks.add(attack);
                 }
             }
         } catch (SQLException e) {

@@ -61,24 +61,16 @@ public class BattleEngine {
     }
 
     private int calculateDamage(Pokemon attacker, Pokemon target, Attack move) {
-        int atk, def;
-        if (move.getCategory().equalsIgnoreCase("Physical")) {
-            atk = attacker.getEffectiveStat("attack", attacker.getAttack());
-            def = target.getEffectiveStat("defense", target.getDefense());
-        } else {
-            atk = attacker.getEffectiveStat("spe_attack", attacker.getSpe_attack());
-            def = target.getEffectiveStat("spe_defense", target.getSpe_defense());
-        }
-
-        double baseDamage = ((((2 * 100.0 / 5) + 2) * move.getPower() * ((double) atk / def)) / 50) + 2;
+        double damage = move.calculateDamage(attacker, target);
 
         double typeMod = Type.getMultiplier(move.getTypeId(), target.getType(), target.getType2());
+        damage *= typeMod;
 
         if (attacker.getHeldItem() != null && "DAMAGE_BOOST_RECOIL".equals(attacker.getHeldItem().getEffectType())) {
-            baseDamage *= attacker.getHeldItem().getModifier();
+            damage *= attacker.getHeldItem().getModifier();
         }
 
-        return (int) (baseDamage * typeMod);
+        return (int) damage;
     }
 
     public void endTurn() {
