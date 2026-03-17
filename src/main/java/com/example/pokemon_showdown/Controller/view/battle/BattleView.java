@@ -85,7 +85,6 @@ public class BattleView {
         if (battleLog != null) {
             battleLog.appendText(message + "\n");
         }
-        System.out.println(message);
     }
 
     public void loadSprites(String pokemonNameP1, String pokemonNameP2) {

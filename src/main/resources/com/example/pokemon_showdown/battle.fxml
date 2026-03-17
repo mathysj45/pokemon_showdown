@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextArea?>
 
 <?import javafx.scene.image.ImageView?>
 <VBox fx:id="battleContain"
@@ -24,17 +25,16 @@
         </columnConstraints>
 
         <rowConstraints>
-            <RowConstraints percentHeight="20" valignment="CENTER"/>
-            <RowConstraints percentHeight="20" valignment="CENTER"/>
-            <RowConstraints percentHeight="20" valignment="CENTER"/>
-            <RowConstraints percentHeight="20" valignment="CENTER"/>
-            <RowConstraints percentHeight="20" valignment="CENTER"/>
+            <RowConstraints percentHeight="50" valignment="CENTER"/>
+            <RowConstraints percentHeight="25" valignment="CENTER"/>
+            <RowConstraints percentHeight="25" valignment="CENTER"/>
         </rowConstraints>
 
-        <GridPane GridPane.columnIndex="0"
+        <GridPane fx:id="battleField"
+                  GridPane.columnIndex="0"
                   GridPane.rowIndex="0"
                   GridPane.columnSpan="2"
-                  GridPane.rowSpan="4"
+                  GridPane.rowSpan="3"
                   maxHeight="Infinity"
                   maxWidth="Infinity">
 
@@ -48,22 +48,26 @@
             </rowConstraints>
 
             <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" alignment="CENTER" spacing="5.0">
-                <Text fx:id="nameP2" text="Nom Adversaire"/>
-                <ProgressBar fx:id="healthBarP2" progress="1.0" prefWidth="150.0"/>
-                <Text fx:id="hpTextP2" text="HP / HP"/>
-                <ImageView fx:id="spriteP2" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"/>
+                <VBox styleClass="containBattleView" prefWidth="150.0" maxWidth="-Infinity" alignment="CENTER" spacing="5.0">
+                    <Text fx:id="nameP2" text="Nom Adversaire"/>
+                    <ProgressBar fx:id="healthBarP2" progress="1.0" prefWidth="130.0"/>
+                    <Text fx:id="hpTextP2" text="HP / HP"/>
+                </VBox>
+                <ImageView fx:id="spriteP2" fitHeight="200.0" fitWidth="200.0" preserveRatio="true"/>
             </VBox>
 
             <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" alignment="CENTER" spacing="5.0">
-                <Text fx:id="nameP1" text="Nom Joueur"/>
-                <ProgressBar fx:id="healthBarP1" progress="1.0" prefWidth="150.0"/>
-                <Text fx:id="hpTextP1" text="HP / HP"/>
-                <ImageView fx:id="spriteP1" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"/>
+                <VBox styleClass="containBattleView" prefWidth="150.0" maxWidth="-Infinity" alignment="CENTER" spacing="5.0">
+                    <Text fx:id="nameP1" text="Nom Joueur"/>
+                    <ProgressBar fx:id="healthBarP1" progress="1.0" prefWidth="130.0"/>
+                    <Text fx:id="hpTextP1" text="HP / HP"/>
+                </VBox>
+                <ImageView fx:id="spriteP1" fitHeight="200.0" fitWidth="200.0" preserveRatio="true"/>
             </VBox>
         </GridPane>
 
-        <VBox GridPane.columnIndex="0"
-              GridPane.rowIndex="4"
+        <VBox styleClass="containBattleView" GridPane.columnIndex="0"
+              GridPane.rowIndex="3"
               GridPane.columnSpan="2"
               maxHeight="Infinity"
               maxWidth="Infinity"
@@ -80,13 +84,18 @@
             <HBox fx:id="teamListContainer" spacing="5.0" />
         </VBox>
 
-        <VBox GridPane.columnIndex="2"
+        <VBox styleClass="containBattleView" GridPane.columnIndex="2"
               GridPane.rowIndex="0"
-              GridPane.rowSpan="5"
+              GridPane.rowSpan="4"
               maxHeight="Infinity"
               maxWidth="Infinity">
-            <Text>JE SUIS UN CHAT</Text>
+            <TextArea fx:id="battleLog"
+                      editable="false"
+                      wrapText="true"
+                      VBox.vgrow="ALWAYS"
+                      maxHeight="Infinity"
+                      maxWidth="Infinity"
+                      style="-fx-control-inner-background: #F0F0E8; -fx-font-family: 'Consolas';"/>
         </VBox>
-
     </GridPane>
 </VBox>

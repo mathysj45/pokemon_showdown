@@ -66,13 +66,15 @@ public class FightController {
         int aiIndex = random.nextInt(activeP2.getMoves().size());
         Attack opponentMove = activeP2.getMoves().get(aiIndex);
 
-        engine.executeTurn(playerMove, opponentMove);
-
-        view.updateUI(activeP1, activeP2);
-        view.renderTeamList(this.playerTeam);
+        // Récupération du journal du tour
+        String logOutput = engine.executeTurn(playerMove, opponentMove);
 
         view.updateUI(activeP1, activeP2);
         view.renderTeamList(this.playerTeam, this::switchActivePokemon);
+
+        // Transmission à la vue
+        view.logMessage(logOutput);
+
         checkWinCondition();
     }
 

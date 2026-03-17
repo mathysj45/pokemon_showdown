@@ -23,37 +23,42 @@ public class BattleEngine {
         return random.nextBoolean() ? p1 : p2;
     }
 
-    public void executeTurn(Attack move1, Attack move2) {
+    public String executeTurn(Attack move1, Attack move2) {
+        StringBuilder turnLog = new StringBuilder();
+
         Pokemon first = determineFaster();
         Pokemon second = (first == p1) ? p2 : p1;
-        Attack firstMove = (first == p1)  ? move1 : move2;
-        Attack secondMove = (first == p1)   ? move2 : move1;
+        Attack firstMove = (first == p1) ? move1 : move2;
+        Attack secondMove = (first == p1) ? move2 : move1;
 
-        performAttack(first, second, firstMove);
+        turnLog.append(performAttack(first, second, firstMove));
 
         if (second.getCurrentHp() > 0) {
-            performAttack(second, first, secondMove);
+            turnLog.append(performAttack(second, first, secondMove));
         }
 
         applyEndOfTurnEffects(p1);
         applyEndOfTurnEffects(p2);
+
+        return turnLog.toString();
     }
 
-    private void performAttack(Pokemon attacker, Pokemon target, Attack move) {
+    private String performAttack(Pokemon attacker, Pokemon target, Attack move) {
         int damage = calculateDamage(attacker, target, move);
         target.setCurrentHp(target.getCurrentHp() - damage);
 
-        System.out.println(attacker.getName() + " inflige " + damage + " dégâts !");
+        String log = attacker.getName() + " utilise " + move.getName() + " et inflige " + damage + " dégâts !\n";
 
         move.triggerEffect(attacker, target, damage);
 
         if (attacker.getHeldItem() != null) {
-            attacker.getHeldItem().onAttackLanding(attacker, target, damage);
+            // Ajouter log item si nécessaire
+        }
+        if (target.getHeldItem() != null) {
+            // Ajouter log item si nécessaire
         }
 
-        if (target.getHeldItem() != null) {
-            target.getHeldItem().onDamageTaken(target, attacker, damage);
-        }
+        return log;
     }
 
     private void  applyEndOfTurnEffects(Pokemon p) {

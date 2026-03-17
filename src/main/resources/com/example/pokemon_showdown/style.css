@@ -61,10 +61,22 @@
 }
 
 #battleContain {
-    /*-fx-background-image: url("iceborne.jpg");*/
+    -fx-background-image: url("iceborne.jpg");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
+}
+
+#battleField {
+    -fx-background-image: url("battleBack.jpg");
+    -fx-background-size: 150% auto;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center 60%;
+}
+
+.containBattleView {
+    -fx-background-color: -fx-background-color-primary;
+    -fx-background-radius: 15px;
 }
 
 #containStats {
