@@ -45,6 +45,8 @@ public class BattleEngine {
 
         System.out.println(attacker.getName() + " inflige " + damage + " dégâts !");
 
+        move.triggerEffect(attacker, target, damage);
+
         if (attacker.getHeldItem() != null) {
             attacker.getHeldItem().onAttackLanding(attacker, target, damage);
         }

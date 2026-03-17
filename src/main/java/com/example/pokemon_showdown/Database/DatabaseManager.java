@@ -59,15 +59,26 @@ public class DatabaseManager {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     String category = rs.getString("category");
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    int typeId = rs.getInt("type_id");
+                    int power = rs.getInt("power");
+                    int secondaryEffectId = rs.getInt("secondary_effect_id");
+
                     Attack attack;
 
                     if ("physical".equalsIgnoreCase(category)) {
-                        attack = new PhysicalAttack(rs.getInt("id"), rs.getString("name"),
-                                rs.getInt("type_id"), rs.getInt("power"));
+                        attack = new PhysicalAttack(id, name, typeId, power);
                     } else {
-                        attack = new SpecialAttack(rs.getInt("id"), rs.getString("name"),
-                                rs.getInt("type_id"), rs.getInt("power"));
+                        attack = new SpecialAttack(id, name, typeId, power);
                     }
+
+                    if (secondaryEffectId == 1) {
+                        attack.setSecondaryEffect(new RecoilEffect());
+                    } else if (secondaryEffectId == 2) {
+                        attack.setSecondaryEffect(new DrainEffect());
+                    }
+
                     attacks.add(attack);
                 }
             }

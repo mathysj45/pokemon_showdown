@@ -1,11 +1,14 @@
 package com.example.pokemon_showdown.Classes;
 
+import com.example.pokemon_showdown.Interfaces.MoveEffect;
+
 public abstract class Attack {
     protected int id;
     protected String name;
     protected int power;
     protected int typeId;
     protected String category;
+    protected MoveEffect secondaryEffect;
 
     public Attack(int id, String name, int typeId, int power, String category) {
         this.id = id;
@@ -19,6 +22,12 @@ public abstract class Attack {
 
     protected double getBaseFormula(int atk, int def, int power) {
         return ((((2 * 100.0 / 5) + 2) * power * ((double) atk / def)) / 50) + 2;
+    }
+
+    public void triggerEffect(Pokemon user, Pokemon target, int damage) {
+        if (this.secondaryEffect != null) {
+            this.secondaryEffect.apply(user, target, damage);
+        }
     }
 
     public int getId() {
@@ -59,6 +68,10 @@ public abstract class Attack {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public void setSecondaryEffect(MoveEffect secondaryEffect) {
+        this.secondaryEffect = secondaryEffect;
     }
 
 

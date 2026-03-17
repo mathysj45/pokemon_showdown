@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : lun. 16 mars 2026 à 15:39
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Hôte : db
+-- Généré le : mar. 17 mars 2026 à 15:35
+-- Version du serveur : 5.7.44
+-- Version de PHP : 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,7 @@ CREATE TABLE `attack` (
   `type_id` int(11) NOT NULL,
   `category` varchar(255) NOT NULL,
   `secondary_effect_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `attack`
@@ -60,9 +60,9 @@ CREATE TABLE `item` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `affected_stat` varchar(50) DEFAULT NULL,
-  `modifier` double DEFAULT 1,
+  `modifier` double DEFAULT '1',
   `effect_type` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `item`
@@ -92,7 +92,7 @@ CREATE TABLE `pokemon` (
   `spe_attack` int(11) NOT NULL,
   `spe_defense` int(11) NOT NULL,
   `speed` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `pokemon`
@@ -119,7 +119,7 @@ INSERT INTO `pokemon` (`id`, `name`, `type`, `type2`, `hp`, `attack`, `defense`,
 CREATE TABLE `pokemon_attacks` (
   `id_attacks` int(11) NOT NULL,
   `id_pokemon` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `pokemon_attacks`
@@ -135,7 +135,16 @@ INSERT INTO `pokemon_attacks` (`id_attacks`, `id_pokemon`) VALUES
 (6, 5),
 (5, 6),
 (2, 7),
-(3, 7);
+(3, 7),
+(6, 3),
+(5, 3),
+(2, 4),
+(7, 8),
+(1, 8),
+(1, 9),
+(3, 9),
+(5, 10),
+(6, 10);
 
 -- --------------------------------------------------------
 
@@ -146,7 +155,7 @@ INSERT INTO `pokemon_attacks` (`id_attacks`, `id_pokemon`) VALUES
 CREATE TABLE `type` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `type`
@@ -224,7 +233,7 @@ ALTER TABLE `attack`
 -- AUTO_INCREMENT pour la table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `pokemon`
