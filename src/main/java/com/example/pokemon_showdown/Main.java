@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.
                                 getResource("main_window.fxml"));
-        Scene mainScene = new Scene(fxmlLoader.load(), 500, 615);
+        Scene mainScene = new Scene(fxmlLoader.load());
 
         String cssPath = Objects.requireNonNull(Main.class.
                                 getResource("style.css")).toExternalForm();
@@ -21,6 +21,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Battle!");
         primaryStage.setScene(mainScene);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }

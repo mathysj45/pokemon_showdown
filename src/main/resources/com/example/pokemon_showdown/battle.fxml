@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.image.ImageView?>
 <VBox fx:id="battleContain"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
@@ -50,12 +51,14 @@
                 <Text fx:id="nameP2" text="Nom Adversaire"/>
                 <ProgressBar fx:id="healthBarP2" progress="1.0" prefWidth="150.0"/>
                 <Text fx:id="hpTextP2" text="HP / HP"/>
+                <ImageView fx:id="spriteP2" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"/>
             </VBox>
 
             <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" alignment="CENTER" spacing="5.0">
                 <Text fx:id="nameP1" text="Nom Joueur"/>
                 <ProgressBar fx:id="healthBarP1" progress="1.0" prefWidth="150.0"/>
                 <Text fx:id="hpTextP1" text="HP / HP"/>
+                <ImageView fx:id="spriteP1" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"/>
             </VBox>
         </GridPane>
 
@@ -73,10 +76,8 @@
                 <Button fx:id="pokemonMove4Data" onAction="#onMove4Clicked" styleClass="attackArea"/>
             </HBox>
 
-            <Text>POKEMON</Text>
-            <HBox>
-                <Text>JE SUIS UNE LISTE DE POKEMON</Text>
-            </HBox>
+            <Text>MONSTIES</Text>
+            <HBox fx:id="teamListContainer" spacing="5.0" />
         </VBox>
 
         <VBox GridPane.columnIndex="2"
