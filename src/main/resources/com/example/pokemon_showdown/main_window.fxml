@@ -17,7 +17,7 @@
     </StackPane>
 
     <VBox fx:id="battleContent" visible="false">
-        <fx:include source="battle.fxml"/>
+        <fx:include fx:id="battleView" source="battle.fxml"/>
     </VBox>
 
 </StackPane>

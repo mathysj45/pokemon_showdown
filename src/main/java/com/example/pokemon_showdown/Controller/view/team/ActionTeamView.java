@@ -16,7 +16,8 @@ public class ActionTeamView extends TeamBuilderView {
     @FXML
     private void launchBattle() {
         if (parentController != null) {
-            parentController.switchToBattle();
+            // On envoie l'équipe construite à la méthode de transition
+            parentController.switchToBattle(this.team);
         }
     }
 
@@ -55,4 +56,5 @@ public class ActionTeamView extends TeamBuilderView {
                     teamListView.getItems().size());
         }
     }
+
 }
