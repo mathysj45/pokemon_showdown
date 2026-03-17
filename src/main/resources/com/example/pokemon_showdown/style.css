@@ -60,6 +60,13 @@
     -fx-vgap: 20px;
 }
 
+#battleContain {
+    -fx-background-image: url("iceborne.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
 #containStats {
     -fx-min-height: 200px;
     -fx-max-height: 220px;

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.example.pokemon_showdown.Controller.view.menu.MainMenuView">
 
@@ -15,8 +16,8 @@
         <fx:include fx:id="teamBuilder" source="pokemon-view.fxml"/>
     </StackPane>
 
-    <GridPane fx:id="battleContent" visible="false">
+    <VBox fx:id="battleContent" visible="false">
         <fx:include source="battle.fxml"/>
-    </GridPane>
+    </VBox>
 
 </StackPane>

@@ -4,12 +4,13 @@ import com.example.pokemon_showdown.Controller.view.team.ActionTeamView;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class MainMenuView {
 
     @FXML private StackPane menuContent;
     @FXML private StackPane appContent;
-    @FXML private GridPane battleContent;
+    @FXML private VBox battleContent;
 
     @FXML private ActionTeamView teamBuilderController;
 
