@@ -37,34 +37,40 @@ public class BattleEngine {
             turnLog.append(performAttack(second, first, secondMove));
         }
 
-        applyEndOfTurnEffects(p1);
-        applyEndOfTurnEffects(p2);
+        turnLog.append(applyEndOfTurnEffects(p1));
+        turnLog.append(applyEndOfTurnEffects(p2));
 
         return turnLog.toString();
     }
 
     private String performAttack(Pokemon attacker, Pokemon target, Attack move) {
+        StringBuilder attackLog = new StringBuilder();
         int damage = calculateDamage(attacker, target, move);
         target.setCurrentHp(target.getCurrentHp() - damage);
 
-        String log = attacker.getName() + " utilise " + move.getName() + " et inflige " + damage + " dégâts !\n";
+        attackLog.append(attacker.getName()).append(" utilise ").append(move.getName()).append(" et inflige ").append(damage).append(" dégâts !\n");
 
-        move.triggerEffect(attacker, target, damage);
+        // L'objet Attack requiert une méthode getEffect() retournant l'instance MoveEffect associée
+        // if (move.getEffect() != null) {
+        //     attackLog.append(move.getEffect().apply(attacker, target, damage));
+        // }
 
         if (attacker.getHeldItem() != null) {
-            // Ajouter log item si nécessaire
-        }
-        if (target.getHeldItem() != null) {
-            // Ajouter log item si nécessaire
+            attackLog.append(attacker.getHeldItem().onAttackLanding(attacker, target, damage));
         }
 
-        return log;
+        if (target.getHeldItem() != null) {
+            attackLog.append(target.getHeldItem().onDamageTaken(target, attacker, damage));
+        }
+
+        return attackLog.toString();
     }
 
-    private void  applyEndOfTurnEffects(Pokemon p) {
+    private String applyEndOfTurnEffects(Pokemon p) {
         if (p.getHeldItem() != null && p.getHeldItem() instanceof BattleEffect) {
-            ((BattleEffect) p.getHeldItem()).onTurnEnd(p);
+            return ((BattleEffect) p.getHeldItem()).onTurnEnd(p);
         }
+        return "";
     }
 
     private int calculateDamage(Pokemon attacker, Pokemon target, Attack move) {
