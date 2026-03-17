@@ -3,12 +3,14 @@ package com.example.pokemon_showdown.Database;
 import com.example.pokemon_showdown.Classes.Attack;
 import com.example.pokemon_showdown.Classes.Item;
 import com.example.pokemon_showdown.Classes.Pokemon;
+import com.example.pokemon_showdown.Classes.Team;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DatabaseManager {
 

@@ -1,10 +1,12 @@
 package com.example.pokemon_showdown.Classes;
 
-public class Item {
+import com.example.pokemon_showdown.Interfaces.BattleEffect;
+
+public class Item implements BattleEffect {
     private String name;
     private String description;
-    private String affectedStat;  // Defines which stat is modified (e.g., "attack", "speed")
-    private double modifier;  // The multiplier applied to the stat (e.g., 1.5 for +50%)
+    private String affectedStat;
+    private double modifier;
     private String effectType;
 
     public Item(String name, String description, String affectedStat, double modifier, String effectType) {
@@ -15,23 +17,40 @@ public class Item {
         this.effectType = effectType;
     }
 
-    public String getName() {return name;}
 
-    public void setName(String name) {this.name = name;}
+    @Override
+    public void onDamageTaken(Pokemon owner, Pokemon attacker, int damage) {
+        if ("REFLECT".equals(this.effectType)) {
+            int recoil = (int) (attacker.getHp() * this.modifier);
+            attacker.setCurrentHp(attacker.getCurrentHp() - recoil);
+        }
+        if ("HEAL_ONCE".equals(this.effectType) && owner.getCurrentHp() <= owner.getHp() / 2) {
+            int heal = (int) (owner.getHp() * this.modifier);
+            owner.setCurrentHp(owner.getCurrentHp() + heal);
+            System.out.println(owner.getName() + " consomme sa " + this.name);
+        }
+    }
 
-    public String getDescription() {return description;}
+    @Override
+    public void onAttackLanding(Pokemon owner, Pokemon target, int damage) {
+        if ("DAMAGE_BOOST_RECOIL".equals(this.effectType)) {
+            int recoil = (int) (owner.getHp() * 0.10);
+            owner.setCurrentHp(owner.getCurrentHp() - recoil);
+            System.out.println(owner.getName() + " subit le contrecoup de l'Orbe Vie.");
+        }
+    }
 
-    public void setDescription(String description) {this.description = description;}
+    @Override
+    public void onTurnEnd(Pokemon owner) {
+        if ("HEAL_TURN".equals(this.effectType)) {
+            int heal = (int) (owner.getHp() * this.modifier);
+            owner.setCurrentHp(owner.getCurrentHp() + heal);
+            System.out.println(owner.getName() + " récupère des PV via " + this.name);
+        }
+    }
 
-    public String getAffectedStat() {return affectedStat;}
-
-    public void setAffectedStat(String affectedStat) {this.affectedStat = affectedStat;}
-
-    public double getModifier() {return modifier;}
-
-    public void setModifier(double modifier) {this.modifier = modifier;}
-
-    public String getEffectType() {return effectType;}
-
-    public void setEffectType(String effectType) {this.effectType = effectType;}
+    public String getName() { return name; }
+    public String getEffectType() { return effectType; }
+    public double getModifier() { return modifier; }
+    public String getAffectedStat() { return affectedStat; }
 }
