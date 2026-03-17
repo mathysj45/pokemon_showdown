@@ -2,14 +2,27 @@ package com.example.pokemon_showdown.Controller.view.team;
 
 import com.example.pokemon_showdown.Classes.Item;
 import com.example.pokemon_showdown.Classes.Pokemon;
+import com.example.pokemon_showdown.Controller.view.menu.MainMenuView;
 import javafx.fxml.FXML;
 
 public class ActionTeamView extends TeamBuilderView {
 
+    private MainMenuView parentController;
+
+    public void setParentController(MainMenuView parentController) {
+        this.parentController = parentController;
+    }
+
+    @FXML
+    private void launchBattle() {
+        if (parentController != null) {
+            parentController.switchToBattle();
+        }
+    }
+
     @FXML
     private void addPokemonToTeam() {
-        Pokemon selectedPokemon = teamBuilder.getSelectionModel().
-                getSelectedItem();
+        Pokemon selectedPokemon = teamBuilder.getSelectionModel().getSelectedItem();
         Item selectedItem = itemComboBox.getSelectionModel().getSelectedItem();
 
         if (selectedPokemon != null && selectedItem != null) {

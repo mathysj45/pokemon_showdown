@@ -2,16 +2,21 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Button?>
 
+<?import javafx.scene.layout.GridPane?>
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.example.pokemon_showdown.Controller.view.menu.MainMenuView">
-
-    <StackPane fx:id="appContent" visible="false">
-        <fx:include source="pokemon-view.fxml"/>
-    </StackPane>
 
     <StackPane fx:id="menuContent" alignment="CENTER" >
         <Button fx:id="theButton" text="Démarrer"
                 onAction="#launchApplication"/>
     </StackPane>
+
+    <StackPane fx:id="appContent" visible="false">
+        <fx:include fx:id="teamBuilder" source="pokemon-view.fxml"/>
+    </StackPane>
+
+    <GridPane fx:id="battleContent" visible="false">
+        <fx:include source="battle.fxml"/>
+    </GridPane>
 
 </StackPane>
