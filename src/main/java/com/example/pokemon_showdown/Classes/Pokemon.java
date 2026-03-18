@@ -16,6 +16,7 @@ public class Pokemon {
     private Integer type2;
     private List<Attack> moves;
     private Item heldItem;
+    private StatusType status = StatusType.NONE;
 
     public Pokemon(int id, String name, int hp,
                    int attack, int defense, int spe_attack,
@@ -114,14 +115,23 @@ public class Pokemon {
 
     public Item getHeldItem() { return heldItem; }
 
+    public StatusType getStatus() { return status; }
+
+    public void setStatus(StatusType status) { this.status = status; }
+
     public int getEffectiveStat(String statName, int baseValue) {
-        // If no item is held or it doesn't affect this stat, return base value
-        if (heldItem == null || !heldItem.getAffectedStat().equalsIgnoreCase(statName)) {
-            return baseValue;
+        int value = baseValue;
+        if (heldItem != null && heldItem.getAffectedStat().equalsIgnoreCase(statName)) {
+            value = (int) (value * heldItem.getModifier());
         }
 
-        // Apply the modifier (e.g., 1.5 for a 50% boost)
-        return (int) (baseValue * heldItem.getModifier());
+        if (statName.equalsIgnoreCase("speed") && status == StatusType.PARALYSIS) {
+            value /= 2;
+        }
+        if (statName.equalsIgnoreCase("attack") && status == StatusType.BURN) {
+            value /= 2;
+        }
+        return value;
     }
 
     public void applyEndOfTurnItems() {

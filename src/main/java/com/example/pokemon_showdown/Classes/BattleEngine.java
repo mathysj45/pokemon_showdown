@@ -1,7 +1,5 @@
 package com.example.pokemon_showdown.Classes;
 
-import com.example.pokemon_showdown.Interfaces.BattleEffect;
-
 import java.util.Random;
 
 public class BattleEngine {
@@ -48,12 +46,10 @@ public class BattleEngine {
         int damage = calculateDamage(attacker, target, move);
         target.setCurrentHp(target.getCurrentHp() - damage);
 
-        attackLog.append(attacker.getName()).append(" utilise ").append(move.getName()).append(" et inflige ").append(damage).append(" dégâts !\n");
+        attackLog.append(attacker.getName()).append(" utilise ").append(move.getName())
+                .append(" et inflige ").append(damage).append(" dégâts !\n");
 
-        // L'objet Attack requiert une méthode getEffect() retournant l'instance MoveEffect associée
-        // if (move.getEffect() != null) {
-        //     attackLog.append(move.getEffect().apply(attacker, target, damage));
-        // }
+        attackLog.append(move.triggerEffect(attacker, target, damage));
 
         if (attacker.getHeldItem() != null) {
             attackLog.append(attacker.getHeldItem().onAttackLanding(attacker, target, damage));
@@ -67,10 +63,21 @@ public class BattleEngine {
     }
 
     private String applyEndOfTurnEffects(Pokemon p) {
-        if (p.getHeldItem() != null && p.getHeldItem() instanceof BattleEffect) {
-            return ((BattleEffect) p.getHeldItem()).onTurnEnd(p);
+        StringBuilder log = new StringBuilder();
+
+        // items
+        if (p.getHeldItem() != null) {
+            log.append(p.getHeldItem().onTurnEnd(p));
         }
-        return "";
+
+        // Status damage
+        if (p.getStatus() == StatusType.POISON || p.getStatus() == StatusType.BURN) {
+            int damage = p.getHp() / 8;
+            p.setCurrentHp(p.getCurrentHp() - damage);
+            log.append(p.getName()).append(" souffre de son statut (").append(p.getStatus()).append(") !\n");
+        }
+
+        return log.toString();
     }
 
     private int calculateDamage(Pokemon attacker, Pokemon target, Attack move) {

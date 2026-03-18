@@ -1,6 +1,7 @@
 package com.example.pokemon_showdown.Database;
 
 import com.example.pokemon_showdown.Classes.*;
+import com.example.pokemon_showdown.Classes.StatusType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -58,11 +59,12 @@ public class DatabaseManager {
             pstmt.setInt(1, pokemonId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    String category = rs.getString("category");
+                    // 1. Récupération des données brutes de la table 'attack'
                     int id = rs.getInt("id");
                     String name = rs.getString("name");
-                    int typeId = rs.getInt("type_id");
                     int power = rs.getInt("power");
+                    int typeId = rs.getInt("type_id");
+                    String category = rs.getString("category");
                     int secondaryEffectId = rs.getInt("secondary_effect_id");
 
                     Attack attack;
@@ -73,10 +75,25 @@ public class DatabaseManager {
                         attack = new SpecialAttack(id, name, typeId, power);
                     }
 
-                    if (secondaryEffectId == 1) {
-                        attack.setSecondaryEffect(new RecoilEffect());
-                    } else if (secondaryEffectId == 2) {
-                        attack.setSecondaryEffect(new DrainEffect());
+                    switch (secondaryEffectId) {
+                        case 1:
+                            attack.setSecondaryEffect(new RecoilEffect());
+                            break;
+                        case 2:
+                            attack.setSecondaryEffect(new DrainEffect());
+                            break;
+                        case 3:
+                            attack.setSecondaryEffect(new StatusEffect(StatusType.BURN));
+                            break;
+                        case 4:
+                            attack.setSecondaryEffect(new StatusEffect(StatusType.POISON));
+                            break;
+                        case 5:
+                            attack.setSecondaryEffect(new StatusEffect(StatusType.PARALYSIS));
+                            break;
+                        default:
+                            attack.setSecondaryEffect(null);
+                            break;
                     }
 
                     attacks.add(attack);

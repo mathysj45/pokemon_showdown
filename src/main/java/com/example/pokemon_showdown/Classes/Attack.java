@@ -24,10 +24,11 @@ public abstract class Attack {
         return ((((2 * 100.0 / 5) + 2) * power * ((double) atk / def)) / 50) + 2;
     }
 
-    public void triggerEffect(Pokemon user, Pokemon target, int damage) {
+    public String triggerEffect(Pokemon user, Pokemon target, int damage) {
         if (this.secondaryEffect != null) {
-            this.secondaryEffect.apply(user, target, damage);
+            return this.secondaryEffect.apply(user, target, damage);
         }
+        return "";
     }
 
     public int getId() {
