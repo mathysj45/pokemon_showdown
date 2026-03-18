@@ -93,6 +93,17 @@ public class BattleEngine {
         return (int) damage;
     }
 
+    public String executeOpponentAttack(Attack move) {
+        StringBuilder turnLog = new StringBuilder();
+
+        turnLog.append(performAttack(p2, p1, move));
+
+        turnLog.append(applyEndOfTurnEffects(p1));
+        turnLog.append(applyEndOfTurnEffects(p2));
+
+        return turnLog.toString();
+    }
+
     public void endTurn() {
         p1.getHeldItem().onTurnEnd(p1);
         p2.getHeldItem().onTurnEnd(p2);

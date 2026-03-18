@@ -101,13 +101,24 @@ public class FightController {
             return;
         }
 
-        this.activeP1 = targetPokemon;
+        boolean wasKO = (this.activeP1.getCurrentHp() <= 0);
 
-        // Actualisation du moteur et du rendu
+        this.activeP1 = targetPokemon;
+        view.logMessage("Envoi de " + this.activeP1.getName() + " !");
+
         this.engine = new BattleEngine(this.activeP1, this.activeP2);
+
+        if (!wasKO) {
+            handleOpponentOnlyTurn();
+        } else {
+            view.logMessage("À vous d'attaquer !");
+        }
+
         this.view.loadSprites(this.activeP1.getName(), this.activeP2.getName());
         this.view.updateUI(this.activeP1, this.activeP2);
-        this.view.logMessage("Envoi de " + this.activeP1.getName() + " !");
+        this.view.renderTeamList(this.playerTeam, this::switchActivePokemon);
+
+        checkWinCondition();
     }
 
     private void handleOpponentFaint() {
@@ -137,5 +148,14 @@ public class FightController {
             view.logMessage("L'adversaire n'a plus de monstres ! VICTOIRE !");
             view.disableAllMoves();
         }
+    }
+
+    private void handleOpponentOnlyTurn() {
+        int aiIndex = random.nextInt(activeP2.getMoves().size());
+        Attack opponentMove = activeP2.getMoves().get(aiIndex);
+
+        String logOutput = engine.executeOpponentAttack(opponentMove);
+
+        view.logMessage(logOutput);
     }
 }
