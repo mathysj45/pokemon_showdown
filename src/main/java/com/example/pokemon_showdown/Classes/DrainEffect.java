@@ -5,8 +5,10 @@ import com.example.pokemon_showdown.Interfaces.MoveEffect;
 public class DrainEffect implements MoveEffect {
     @Override
     public String apply(Pokemon user, Pokemon target, int damageDealt) {
+        // Record HP before healing to calculate actual gain (avoiding ghost HP over max)
         int oldHp = user.getCurrentHp();
         int healAmount = (int) (damageDealt * 0.50);
+
         user.setCurrentHp(user.getCurrentHp() + healAmount);
         int actualHealed = user.getCurrentHp() - oldHp;
 

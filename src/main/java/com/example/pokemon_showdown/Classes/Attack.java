@@ -2,6 +2,10 @@ package com.example.pokemon_showdown.Classes;
 
 import com.example.pokemon_showdown.Interfaces.MoveEffect;
 
+/**
+ * Abstract class representing a generic Attack.
+ * We use 'abstract' because an attack must be either Physical or Special to exist.
+ */
 public abstract class Attack {
     protected int id;
     protected String name;
@@ -18,12 +22,21 @@ public abstract class Attack {
         this.category = category;
     }
 
+    /**
+     * Abstract method enforced on subclasses.
+     * PhysicalAttack and SpecialAttack will use different stats (Attack vs SpeAttack).
+     */
     public abstract int calculateDamage(Pokemon attacker, Pokemon target);
 
+    // Standard damage formula used across all subclasses
     protected double getBaseFormula(int atk, int def, int power) {
         return ((((2 * 100.0 / 5) + 2) * power * ((double) atk / def)) / 50) + 2;
     }
 
+    /**
+     * Executes the secondary effect if assigned (Polymorphism in action).
+     * Returns the formatted log message for the UI.
+     */
     public String triggerEffect(Pokemon user, Pokemon target, int damage) {
         if (this.secondaryEffect != null) {
             return this.secondaryEffect.apply(user, target, damage);
@@ -31,50 +44,9 @@ public abstract class Attack {
         return "";
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPower() {
-        return power;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
-    }
-
-    public int getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setSecondaryEffect(MoveEffect secondaryEffect) {
-        this.secondaryEffect = secondaryEffect;
-    }
-
-
+    // Getters and Setters...
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public int getTypeId() { return typeId; }
+    public void setSecondaryEffect(MoveEffect secondaryEffect) { this.secondaryEffect = secondaryEffect; }
 }
-

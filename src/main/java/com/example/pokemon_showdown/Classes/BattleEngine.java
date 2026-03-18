@@ -15,6 +15,7 @@ public class BattleEngine {
         this.turnCount = 1;
     }
 
+    // Overloaded constructor to maintain turn continuity during switches
     public BattleEngine(Pokemon p1, Pokemon p2, int currentTurn) {
         this.p1 = p1;
         this.p2 = p2;
@@ -51,6 +52,7 @@ public class BattleEngine {
         return turnLog.toString();
     }
 
+    // Specifically for manual switches: only the opponent gets to act
     public String executeOpponentAttack(Attack move) {
         StringBuilder turnLog = new StringBuilder();
         turnLog.append("--- TOUR ").append(turnCount).append(" (Changement) ---\n");
@@ -71,6 +73,7 @@ public class BattleEngine {
         attackLog.append(attacker.getName()).append(" utilise ").append(move.getName())
                 .append(" (").append(damage).append(" dégâts).\n");
 
+        // Dynamic type effectiveness feedback
         if (lastTypeMultiplier > 1.0) {
             attackLog.append("C'est super efficace !\n");
         } else if (lastTypeMultiplier > 0 && lastTypeMultiplier < 1.0) {
@@ -79,6 +82,7 @@ public class BattleEngine {
             attackLog.append("Ça n'affecte pas ").append(target.getName()).append("...\n");
         }
 
+        // Trigger polymorphism-based secondary effects
         attackLog.append(move.triggerEffect(attacker, target, damage));
 
         if (attacker.getHeldItem() != null)
@@ -91,17 +95,16 @@ public class BattleEngine {
 
     private int calculateDamage(Pokemon attacker, Pokemon target, Attack move) {
         double damage = move.calculateDamage(attacker, target);
-
         lastTypeMultiplier = Type.getMultiplier(move.getTypeId(), target.getType(), target.getType2());
         damage *= lastTypeMultiplier;
 
         if (attacker.getHeldItem() != null && "DAMAGE_BOOST_RECOIL".equals(attacker.getHeldItem().getEffectType())) {
             damage *= attacker.getHeldItem().getModifier();
         }
-
         return (int) damage;
     }
 
+    // Handles status decay and item healing at the end of each turn
     private String applyEndOfTurnEffects(Pokemon p) {
         if (p.getCurrentHp() <= 0) return "";
 
