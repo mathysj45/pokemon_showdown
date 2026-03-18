@@ -134,23 +134,30 @@ public class Pokemon {
         return value;
     }
 
-    public void applyEndOfTurnItems() {
+    public int applyEndOfTurnItems() {
         if (heldItem != null && "HEAL_TURN".equals(heldItem.getEffectType())) {
+            if (this.currentHp >= this.hp || this.currentHp <= 0) return 0;
+
+            int oldHp = this.currentHp;
             int healAmount = (int) (this.hp * heldItem.getModifier());
             this.setCurrentHp(this.currentHp + healAmount);
-            System.out.println(this.name + " récupère des HP " + heldItem.getName());
+
+            return this.currentHp - oldHp;
         }
+        return 0;
     }
 
-    public void checkConsumableItems() {
+    public int checkConsumableItems() {
         if (heldItem != null && "HEAL_ONCE".equals(heldItem.getEffectType())) {
             if (this.currentHp > 0 && this.currentHp <= (this.hp / 2)) {
+                int oldHp = this.currentHp;
                 int healAmount = (int) (this.hp * heldItem.getModifier());
                 this.setCurrentHp(this.currentHp + healAmount);
-                System.out.println(this.name + " consomme " + heldItem.getName() + " et restore ses HP.");
-                this.heldItem = null; // Item is consumed and disappears
+                this.heldItem = null;
+                return this.currentHp - oldHp;
             }
         }
+        return 0;
     }
 
     public void applyRockyHelmet(Pokemon attacker){

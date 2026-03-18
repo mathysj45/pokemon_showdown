@@ -7,6 +7,7 @@ public class BattleEngine {
     private final Pokemon p2;
     private int turnCount;
     private final Random random = new Random();
+    private double lastTypeMultiplier = 1.0;
 
     public BattleEngine(Pokemon p1, Pokemon p2) {
         this.p1 = p1;
@@ -70,6 +71,14 @@ public class BattleEngine {
         attackLog.append(attacker.getName()).append(" utilise ").append(move.getName())
                 .append(" (").append(damage).append(" dégâts).\n");
 
+        if (lastTypeMultiplier > 1.0) {
+            attackLog.append("C'est super efficace !\n");
+        } else if (lastTypeMultiplier > 0 && lastTypeMultiplier < 1.0) {
+            attackLog.append("Ce n'est pas très efficace...\n");
+        } else if (lastTypeMultiplier == 0) {
+            attackLog.append("Ça n'affecte pas ").append(target.getName()).append("...\n");
+        }
+
         attackLog.append(move.triggerEffect(attacker, target, damage));
 
         if (attacker.getHeldItem() != null)
@@ -82,23 +91,46 @@ public class BattleEngine {
 
     private int calculateDamage(Pokemon attacker, Pokemon target, Attack move) {
         double damage = move.calculateDamage(attacker, target);
-        double typeMod = Type.getMultiplier(move.getTypeId(), target.getType(), target.getType2());
-        damage *= typeMod;
+
+        lastTypeMultiplier = Type.getMultiplier(move.getTypeId(), target.getType(), target.getType2());
+        damage *= lastTypeMultiplier;
 
         if (attacker.getHeldItem() != null && "DAMAGE_BOOST_RECOIL".equals(attacker.getHeldItem().getEffectType())) {
             damage *= attacker.getHeldItem().getModifier();
         }
+
         return (int) damage;
     }
 
     private String applyEndOfTurnEffects(Pokemon p) {
+        if (p.getCurrentHp() <= 0) return "";
+
         StringBuilder log = new StringBuilder();
+
         if (p.getStatus() == StatusType.POISON || p.getStatus() == StatusType.BURN) {
-            int statusDamage = p.getHp() / 8;
+            int statusDamage = Math.max(1, p.getHp() / 8);
             p.setCurrentHp(p.getCurrentHp() - statusDamage);
             log.append(p.getName()).append(" souffre de ").append(p.getStatus().getLabel()).append(".\n");
+
+            if (p.getCurrentHp() <= 0) {
+                log.append(p.getName()).append(" succombe à son altération d'état...\n");
+                return log.toString();
+            }
         }
-        if (p.getHeldItem() != null) log.append(p.getHeldItem().onTurnEnd(p));
+
+        Item held = p.getHeldItem();
+        int healRestes = p.applyEndOfTurnItems();
+        if (healRestes > 0 && held != null) {
+            log.append(p.getName()).append(" récupère ").append(healRestes)
+                    .append(" PV grâce à : ").append(held.getName()).append(".\n");
+        }
+
+        int healBaie = p.checkConsumableItems();
+        if (healBaie > 0) {
+            log.append(p.getName()).append(" consomme sa Baie et récupère ")
+                    .append(healBaie).append(" PV.\n");
+        }
+
         return log.toString();
     }
 

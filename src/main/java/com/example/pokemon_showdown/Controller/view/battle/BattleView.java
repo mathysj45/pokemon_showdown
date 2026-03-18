@@ -3,6 +3,7 @@ package com.example.pokemon_showdown.Controller.view.battle;
 import com.example.pokemon_showdown.Classes.Pokemon;
 import com.example.pokemon_showdown.Classes.StatusType;
 import com.example.pokemon_showdown.Classes.Team;
+import com.example.pokemon_showdown.Classes.Type;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -49,13 +50,25 @@ public class BattleView {
     }
 
     public void updateUI(Pokemon activeP1, Pokemon activeP2) {
-        String nameWithStatusP1 = activeP1.getName() + (activeP1.getStatus() != StatusType.NONE ?
-                " [" + activeP1.getStatus().getLabel() + "]" : "");
-        String nameWithStatusP2 = activeP2.getName() + (activeP2.getStatus() != StatusType.NONE ?
-                " [" + activeP2.getStatus().getLabel() + "]" : "");
+        String type1P1 = Type.getTypeName(activeP1.getType());
+        String typeTextP1 = "(" + type1P1;
+        if (activeP1.getType2() != null && activeP1.getType2() > 0) {
+            typeTextP1 += "/" + Type.getTypeName(activeP1.getType2());
+        }
+        typeTextP1 += ")";
 
-        nameP1.setText(nameWithStatusP1);
-        nameP2.setText(nameWithStatusP2);
+        String type1P2 = Type.getTypeName(activeP2.getType());
+        String typeTextP2 = "(" + type1P2;
+        if (activeP2.getType2() != null && activeP2.getType2() > 0) {
+            typeTextP2 += "/" + Type.getTypeName(activeP2.getType2());
+        }
+        typeTextP2 += ")";
+
+        String statusP1 = (activeP1.getStatus() != StatusType.NONE ? " [" + activeP1.getStatus().getLabel() + "]" : "");
+        String statusP2 = (activeP2.getStatus() != StatusType.NONE ? " [" + activeP2.getStatus().getLabel() + "]" : "");
+
+        nameP1.setText(activeP1.getName() + " " + typeTextP1 + statusP1);
+        nameP2.setText(activeP2.getName() + " " + typeTextP2 + statusP2);
 
         double ratioP1 = (double) activeP1.getCurrentHp() / activeP1.getHp();
         double ratioP2 = (double) activeP2.getCurrentHp() / activeP2.getHp();
@@ -154,7 +167,8 @@ public class BattleView {
             setSprite(sprite, member.getName());
 
             HBox statsBox = new HBox(2.0);
-            Text nameText = new Text(member.getName() + " (" + member.getCurrentHp() + "/" + member.getHp() + ")");
+            Text nameText = new Text(member.getName() + " (" + member.getCurrentHp() +
+                    "/" + member.getHp() + ")");
 
             double hpRatio = (double) member.getCurrentHp() / member.getHp();
             ProgressBar hpBar = new ProgressBar(Math.max(0, hpRatio));
