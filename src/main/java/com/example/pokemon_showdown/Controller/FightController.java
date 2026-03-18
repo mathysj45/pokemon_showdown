@@ -2,6 +2,7 @@ package com.example.pokemon_showdown.Controller;
 
 import com.example.pokemon_showdown.Classes.*;
 import com.example.pokemon_showdown.Controller.view.battle.BattleView;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.Random;
 
@@ -30,14 +32,16 @@ public class FightController {
     private Pokemon activeP1;
     private Pokemon activeP2;
     private Team playerTeam;
+    private Team opponentTeam;
     private Random random = new Random();
     private BattleView view;
 
     public void initBattle(Team playerTeam, Team opponentTeam) {
         this.playerTeam = playerTeam;
+        this.opponentTeam = opponentTeam;
 
         this.activeP1 = this.playerTeam.getMembers().get(0);
-        this.activeP2 = opponentTeam.getMembers().get(0);
+        this.activeP2 = this.opponentTeam.getMembers().get(0);
 
         this.activeP1.setCurrentHp(this.activeP1.getHp());
         this.activeP2.setCurrentHp(this.activeP2.getHp());
@@ -66,25 +70,29 @@ public class FightController {
         int aiIndex = random.nextInt(activeP2.getMoves().size());
         Attack opponentMove = activeP2.getMoves().get(aiIndex);
 
-        // Récupération du journal du tour
         String logOutput = engine.executeTurn(playerMove, opponentMove);
 
         view.updateUI(activeP1, activeP2);
         view.renderTeamList(this.playerTeam, this::switchActivePokemon);
 
-        // Transmission à la vue
         view.logMessage(logOutput);
 
         checkWinCondition();
     }
 
     private void checkWinCondition() {
+        if (activeP1.getCurrentHp() <= 0) {
+            view.logMessage(activeP1.getName() + " est K.O. !");
+        }
+
         if (activeP2.getCurrentHp() <= 0) {
-            view.logMessage(activeP2.getName() + " est K.O. ! Vous avez gagné !");
+            view.logMessage(activeP2.getName() + " adverse est K.O. !");
+
             view.disableAllMoves();
-        } else if (activeP1.getCurrentHp() <= 0) {
-            view.logMessage(activeP1.getName() + " est K.O. ! Vous avez perdu...");
-            view.disableAllMoves();
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+            pause.setOnFinished(event -> handleOpponentFaint());
+            pause.play();
         }
     }
 
@@ -100,5 +108,34 @@ public class FightController {
         this.view.loadSprites(this.activeP1.getName(), this.activeP2.getName());
         this.view.updateUI(this.activeP1, this.activeP2);
         this.view.logMessage("Envoi de " + this.activeP1.getName() + " !");
+    }
+
+    private void handleOpponentFaint() {
+        Pokemon nextPokemon = null;
+
+        for (Pokemon p : opponentTeam.getMembers()) {
+            if (p.getCurrentHp() > 0) {
+                nextPokemon = p;
+                break;
+            }
+        }
+
+        if (nextPokemon != null) {
+            this.activeP2 = nextPokemon;
+
+            this.engine = new BattleEngine(this.activeP1, this.activeP2);
+
+            view.logMessage("L'adversaire envoie " + activeP2.getName() + " !");
+
+            view.loadSprites(activeP1.getName(), activeP2.getName());
+            view.updateUI(activeP1, activeP2);
+
+            if (activeP1.getCurrentHp() > 0) {
+                view.updateUI(activeP1, activeP2);
+            }
+        } else {
+            view.logMessage("L'adversaire n'a plus de monstres ! VICTOIRE !");
+            view.disableAllMoves();
+        }
     }
 }
