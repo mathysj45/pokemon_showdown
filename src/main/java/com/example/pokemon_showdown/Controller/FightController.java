@@ -73,8 +73,6 @@ public class FightController {
         String logOutput = engine.executeTurn(playerMove, opponentMove);
 
         view.updateUI(activeP1, activeP2);
-        view.renderTeamList(this.playerTeam, this::switchActivePokemon);
-
         view.logMessage(logOutput);
 
         checkWinCondition();
@@ -97,33 +95,33 @@ public class FightController {
     }
 
     private void switchActivePokemon(Pokemon targetPokemon) {
-        if (targetPokemon == this.activeP1 || targetPokemon.getCurrentHp() <= 0) {
-            return;
-        }
+        if (targetPokemon == null || targetPokemon == this.activeP1 || targetPokemon.getCurrentHp() <= 0) return;
 
+        int currentTurn = (this.engine != null) ? this.engine.getTurnCount() : 1;
         boolean wasKO = (this.activeP1.getCurrentHp() <= 0);
 
         this.activeP1 = targetPokemon;
-        view.logMessage("Envoi de " + this.activeP1.getName() + " !");
-
-        this.engine = new BattleEngine(this.activeP1, this.activeP2);
+        this.engine = new BattleEngine(this.activeP1, this.activeP2, currentTurn);
 
         if (!wasKO) {
-            handleOpponentOnlyTurn();
+            view.logMessage("Retrait de l'ancien monstre...");
+            view.logMessage("Envoi de " + this.activeP1.getName() + " !");
+
+            int aiIndex = random.nextInt(activeP2.getMoves().size());
+            Attack opponentMove = activeP2.getMoves().get(aiIndex);
+            view.logMessage(engine.executeOpponentAttack(opponentMove));
         } else {
-            view.logMessage("À vous d'attaquer !");
+            view.logMessage("Envoi de " + this.activeP1.getName() + " !");
         }
 
         this.view.loadSprites(this.activeP1.getName(), this.activeP2.getName());
         this.view.updateUI(this.activeP1, this.activeP2);
         this.view.renderTeamList(this.playerTeam, this::switchActivePokemon);
-
         checkWinCondition();
     }
 
     private void handleOpponentFaint() {
         Pokemon nextPokemon = null;
-
         for (Pokemon p : opponentTeam.getMembers()) {
             if (p.getCurrentHp() > 0) {
                 nextPokemon = p;
@@ -132,20 +130,16 @@ public class FightController {
         }
 
         if (nextPokemon != null) {
+            int currentTurn = this.engine.getTurnCount();
             this.activeP2 = nextPokemon;
 
-            this.engine = new BattleEngine(this.activeP1, this.activeP2);
+            this.engine = new BattleEngine(this.activeP1, this.activeP2, currentTurn);
 
             view.logMessage("L'adversaire envoie " + activeP2.getName() + " !");
-
             view.loadSprites(activeP1.getName(), activeP2.getName());
             view.updateUI(activeP1, activeP2);
-
-            if (activeP1.getCurrentHp() > 0) {
-                view.updateUI(activeP1, activeP2);
-            }
         } else {
-            view.logMessage("L'adversaire n'a plus de monstres ! VICTOIRE !");
+            view.logMessage("L'adversaire n'a plus de monstres ! Victoire !");
             view.disableAllMoves();
         }
     }
