@@ -91,6 +91,9 @@ public class DatabaseManager {
                         case 5:
                             attack.setSecondaryEffect(new StatusEffect(StatusType.PARALYSIS));
                             break;
+                        case 7:
+                            attack.setSecondaryEffect(new RecoilEffect());
+                            break;
                         default:
                             attack.setSecondaryEffect(null);
                             break;

@@ -1,6 +1,7 @@
 package com.example.pokemon_showdown.Controller.view.battle;
 
 import com.example.pokemon_showdown.Classes.Pokemon;
+import com.example.pokemon_showdown.Classes.StatusType;
 import com.example.pokemon_showdown.Classes.Team;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -48,8 +49,13 @@ public class BattleView {
     }
 
     public void updateUI(Pokemon activeP1, Pokemon activeP2) {
-        nameP1.setText(activeP1.getName());
-        nameP2.setText(activeP2.getName());
+        String nameWithStatusP1 = activeP1.getName() + (activeP1.getStatus() != StatusType.NONE ?
+                " [" + activeP1.getStatus().getLabel() + "]" : "");
+        String nameWithStatusP2 = activeP2.getName() + (activeP2.getStatus() != StatusType.NONE ?
+                " [" + activeP2.getStatus().getLabel() + "]" : "");
+
+        nameP1.setText(nameWithStatusP1);
+        nameP2.setText(nameWithStatusP2);
 
         double ratioP1 = (double) activeP1.getCurrentHp() / activeP1.getHp();
         double ratioP2 = (double) activeP2.getCurrentHp() / activeP2.getHp();
