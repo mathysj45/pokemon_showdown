@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 17 mars 2026 à 15:35
+-- Généré le : lun. 23 mars 2026 à 20:09
 -- Version du serveur : 5.7.44
 -- Version de PHP : 8.3.26
 
@@ -47,7 +47,8 @@ INSERT INTO `attack` (`id`, `name`, `power`, `type_id`, `category`, `secondary_e
 (4, 'Choc Venimeux', 65, 8, 'special', 4),
 (5, 'Tonnerre', 90, 5, 'special', 5),
 (6, 'Draco-Choc', 85, 15, 'special', 6),
-(7, 'Rapace', 120, 10, 'physical', 7);
+(7, 'Rapace', 120, 10, 'physical', 7),
+(8, 'Morsure', 60, 16, 'physical', 8);
 
 -- --------------------------------------------------------
 
@@ -144,7 +145,8 @@ INSERT INTO `pokemon_attacks` (`id_attacks`, `id_pokemon`) VALUES
 (1, 9),
 (3, 9),
 (5, 10),
-(6, 10);
+(6, 10),
+(8, 4);
 
 -- --------------------------------------------------------
 
@@ -227,7 +229,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT pour la table `attack`
 --
 ALTER TABLE `attack`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `item`
